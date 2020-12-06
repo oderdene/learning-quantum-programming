@@ -6,11 +6,10 @@ print("Бүхэл тоо оруулна уу!")
 a = int(input("a="))
 b = int(input("b="))
 
-n_bits = 3
+n_bits = 8
 a_bits = '{:08b}'.format(a)[-n_bits:]
 b_bits = '{:08b}'.format(b)[-n_bits:]
 
-print("{}={} {}={}".format(a, a_bits, b, b_bits))
 
 
 def sum_qubits(a_bit, b_bit, carry_in):
@@ -48,6 +47,8 @@ def sum_qubits(a_bit, b_bit, carry_in):
     return result[0], result[1]
 
 
+print("Full adder бит нэмэх хүснэгт:")
+
 a_bit, b_bit, carry_in = 1, 1, 1
 summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
 print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
@@ -79,3 +80,22 @@ print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in,
 a_bit, b_bit, carry_in = 0, 0, 0
 summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
 print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+
+print("########### ХОЁР БҮХЭЛ ТООНЫ НИЙЛБЭР ##############")
+result = ''
+carry_in = 0
+for i in reversed(range(n_bits)):
+    a_bit    = int(a_bits[i])
+    b_bit    = int(b_bits[i])
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    carry_in = carry_out
+    result  += str(summed)
+result     = result[::-1]
+result_int = int(result, 2)
+
+print("{}={} \n{}={}".format(a, a_bits, b, b_bits))
+print("{}+{}={}".format(a_bits, b_bits, result))
+print("{}={}".format(result, result_int))
+print("########### ҮР ДҮН #################################")
+print("{}+{}={}".format(a, b, result_int))
