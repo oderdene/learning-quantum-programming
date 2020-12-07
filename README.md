@@ -4,6 +4,7 @@ Just learning new stuffs
 # Tasks
  - Done    : Implement Grover's algorithm in classic way
  - ONGOING : Implement Grover's algorithm using quantum circuit
+ - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit
  - Implement Shor's algorithm 
  - ...
