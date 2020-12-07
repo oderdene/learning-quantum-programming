@@ -1,6 +1,6 @@
 import cirq
 
-# Generate Bell State for 3 qubits
+# 3 qubit-үүдээр Bellstate болон Hadamard ашиглан сэлгэмэл үүсгэх
 # |000> |001> |010> |011> |100> |101> |110> |111>
 
 

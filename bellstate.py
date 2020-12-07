@@ -1,6 +1,6 @@
 import cirq
 
-# Generate Bell State
+# Bell State
 # sqrt(2)*(|00>+|11>)
 
 q0, q1 = cirq.LineQubit.range(2)
