@@ -1,4 +1,12 @@
 # About
+Just learning new stuffs
+
+# Tasks
+ - Implement Grover's algorithm in classic way
+ - Implement Grover's algorithm using quantum circuit
+ - Implement multiplication using quantum circuit
+ - Implement Shor's algorithm 
+ - ...
 
 # References
  - https://cirq.readthedocs.io/en/stable/

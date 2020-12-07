@@ -22,7 +22,7 @@ print(circuit)
 
 simulator = cirq.Simulator()
 print("квант код ажиллуулж байна түр хүлээгээрэй...")
-result = simulator.run(circuit, repetitions=100000)
+result = simulator.run(circuit, repetitions=1000000)
 
 for sample in result.measurements['result'][:10]:
     print(sample)
