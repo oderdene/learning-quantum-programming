@@ -43,7 +43,7 @@ def sum_qubits(a_bit, b_bit, carry_in):
             cirq.measure(q5, q7, key='results')
             )
     simulator = cirq.Simulator()
-    result    = simulator.run(circuit, repetitions=100).measurements['results'][0]
+    result    = simulator.run(circuit, repetitions=10).measurements['results'][0]
     return result[0], result[1]
 
 
