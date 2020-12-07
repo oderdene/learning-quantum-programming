@@ -1,6 +1,7 @@
 import cirq
 
-# Generate Bell State for 4 state
+# Generate Bell State for 2 qubits
+# |00> |01> |10> |11>
 
 
 q0, q1 = cirq.LineQubit.range(2)
