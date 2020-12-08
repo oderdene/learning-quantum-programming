@@ -188,9 +188,14 @@ print(H2_001, "\n")
 
 
 
-# CNOT gate хэрэгжүүлэлэх
+# CNOT gate буюу квант IF хэрэгжүүлэх
 # P0 = |0><0|, P1 = |1><1|
 # CNOT = P0⊗ ID + P1⊗ X
+#
+#  0: ───@───
+#        │
+#  1: ───X───
+#
 P0        = np.dot(zero, zero.T)
 P1        = np.dot(one , one.T )
 CNOT_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_x)
@@ -214,4 +219,5 @@ print(CNOT_10, "\n")
 CNOT_11 = np.dot(CNOT_on_2, q11)
 print("CNOT(|11>)")
 print(CNOT_11, "\n")
+
 
