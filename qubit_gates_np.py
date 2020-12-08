@@ -221,3 +221,23 @@ print("CNOT(|11>)")
 print(CNOT_11, "\n")
 
 
+# Bell state буюу квант орооцолдоон(aka quantum entanglement)
+#
+#  |0> ───H───@───
+#         │   │
+#  |0> ───X───M───
+#
+# 1/√2(|00>+|11>)
+#
+H0_on_2    = n_kron(hadamard, ID) # 2 qubit-н эхнийх дээр Hadamard
+P0         = np.dot(zero, zero.T)
+P1         = np.dot(one , one.T )
+CNOT_on_2  = n_kron(P0, ID) + n_kron(P1, pauli_x)
+
+q0         = zero
+q1         = zero
+q00        = np.kron(q0, q1)
+H0_00      = np.dot(H0_on_2, q00)
+CNOT_H0_00 = np.dot(CNOT_on_2, H0_00)
+print("BellState(|0>, |0>) = 1/√2(|00>+|11>")
+print(CNOT_H0_00, "\n")
