@@ -1,5 +1,5 @@
 # About
-Just learning new stuffs
+Just learning quantum stuffs
 
 # Notebooks
  - Үндсэн квант gate-үүдийг numpy дээр хэрэгжүүлэлж харах [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lTTULxuOql2VDmjPZ5Qcdeitpy3KFfRW?usp=sharing)

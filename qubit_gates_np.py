@@ -200,12 +200,12 @@ P0        = np.dot(zero, zero.T)
 P1        = np.dot(one , one.T )
 CNOT_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_x)
 
-# CNOT(|00>) - |00>
+# CNOT(|00>) -> |00>
 CNOT_00 = np.dot(CNOT_on_2, q00)
 print("CNOT(|00>)")
 print(CNOT_00, "\n")
 
-# CNOT(|01>) - |01>
+# CNOT(|01>) -> |01>
 CNOT_01 = np.dot(CNOT_on_2, q01)
 print("CNOT(|01>)")
 print(CNOT_01, "\n")
