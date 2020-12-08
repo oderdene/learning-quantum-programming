@@ -2,7 +2,7 @@
 Just learning new stuffs
 
 # Notebooks
- - Үндсэн квант gate-үүдийн numpy дээр хэрэгжүүлэлж харах [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lTTULxuOql2VDmjPZ5Qcdeitpy3KFfRW?usp=sharing)
+ - Үндсэн квант gate-үүдийг numpy дээр хэрэгжүүлэлж харах [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lTTULxuOql2VDmjPZ5Qcdeitpy3KFfRW?usp=sharing)
 
 # Tasks
  - Done    : Implement Grover's algorithm in classic way
