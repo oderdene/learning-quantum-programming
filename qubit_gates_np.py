@@ -6,8 +6,8 @@ def normalize_state(state):
 
 def n_kron(*args):
     result = np.array([[1.+0.j]])
-    for q in args:
-        result = np.kron(result, q)
+    for op in args:
+        result = np.kron(result, op)
     return result
 
 
@@ -227,7 +227,7 @@ print(CNOT_11, "\n")
 #            │
 #  |0> ──────X───
 #
-# 1/√2(|00>+|11>)
+#  1/√2(|00>+|11>)
 #
 H0_on_2    = n_kron(hadamard, ID) # 2 qubit-н эхнийх дээр Hadamard
 P0         = np.dot(zero, zero.T)
@@ -241,3 +241,33 @@ H0_00      = np.dot(H0_on_2, q00)
 CNOT_H0_00 = np.dot(CNOT_on_2, H0_00)
 print("BellState(|0>, |0>) = 1/√2(|00>+|11>")
 print(CNOT_H0_00, "\n")
+
+
+# Measure qubit
+print("Qubit дээр measure хийх туршилт :")
+print("1/√2(|00>+|11>) 2 qubit Bell State")
+q2_bellstate = normalize_state(q00+q11)
+print(q2_bellstate)
+
+# Bell state-ийн 0-р qubit дээр 0 бит болж collapse хийх магадлалийг тооцох
+P0    = np.dot(zero, zero.T)
+P1    = np.dot( one,  one.T)
+ID    = np.eye(2, dtype=np.cfloat)
+prob0 = np.trace(np.dot(n_kron(P0, ID), np.dot(q2_bellstate, q2_bellstate.T)))
+
+measures = []
+state    = None
+for _ in range(100):
+    if (np.random.rand() < prob0):
+        result = 0
+        state  = normalize_state(np.dot(n_kron(P0, ID), q2_bellstate))
+        measures.append(result)
+    else:
+        result = 1
+        state  = normalize_state(np.dot(n_kron(P1, ID), q2_bellstate))
+        measures.append(result)
+
+print("q0 qubit дээрхи хэмжилтүүд :")
+print(''.join(str(i) for i in measures))
+print("Хэвжилт хийсний дараах төлөв:")
+print(state)
