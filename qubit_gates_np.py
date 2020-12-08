@@ -141,9 +141,9 @@ print("|++>")
 print(q_plusplus, "\n")
 
 # 1/√2(|00>+|11>)
-q_catstate = normalize_state(q00+q11)
-print("1/√2(|00>+|11> cat state")
-print(q_catstate, "\n")
+q_bellstate = normalize_state(q00+q11)
+print("1/√2(|00>+|11> Bell State")
+print(q_bellstate, "\n")
 
 # |000>
 q000 = n_kron(zero, zero, zero)
@@ -200,22 +200,22 @@ P0        = np.dot(zero, zero.T)
 P1        = np.dot(one , one.T )
 CNOT_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_x)
 
-# CNOT(|00>)
+# CNOT(|00>) - |00>
 CNOT_00 = np.dot(CNOT_on_2, q00)
 print("CNOT(|00>)")
 print(CNOT_00, "\n")
 
-# CNOT(|01>)
+# CNOT(|01>) - |01>
 CNOT_01 = np.dot(CNOT_on_2, q01)
 print("CNOT(|01>)")
 print(CNOT_01, "\n")
 
-# CNOT(|10>)
+# CNOT(|10>) -> |11>
 CNOT_10 = np.dot(CNOT_on_2, q10)
 print("CNOT(|10>)")
 print(CNOT_10, "\n")
 
-# CNOT(|11>)
+# CNOT(|11>) -> |10>
 CNOT_11 = np.dot(CNOT_on_2, q11)
 print("CNOT(|11>)")
 print(CNOT_11, "\n")
