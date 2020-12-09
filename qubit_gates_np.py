@@ -340,3 +340,22 @@ for _ in range(repetitions):
     result += qubit_lookup_table[vector]+" "
 
 print(result)
+
+
+# Phase flip болон Z эргүүлэлттэй холбоотой туршилт
+#
+#   Энэ туршилтаар Z эргүүлэлтийн ач холбогдлыг мэдэхийг хичээх болно.
+#   Hadamard gate-ээр qubit-ийг superposition-д оруулаад дахин Hadamard
+#   хэрэглэвэл qubit-ийн төлөв өмнөх байсан төлөв дээрээ эргэн ирнэ.
+#   Жишээлбэл HH|0>=|0>, HH|1>=|1> болно.
+#   Хэрэв дунд нь Z эргүүлэлт хийвэл qubit-ийн төлөв эсрэг төлөврүү шилждэг.
+#   Жишээлбэл HZH|0>=|1>, HZH|1>=|0> болно.
+#   Ингэснээр superposition-д орсон хэдийн мэдээлэл хадгалах бололцоотой.
+#
+# Лавлагаа:
+#  - https://quantumcomputinguk.org/tutorials/z-gate
+#  - https://quantumcomputinguk.org/tutorials/superdense
+#
+#
+
+print("Phase flip болон Z эргүүлэлттэй холбоотой туршилт :")
