@@ -339,7 +339,7 @@ for _ in range(repetitions):
     vector  = measure(q2_bellstate)
     result += qubit_lookup_table[vector]+" "
 
-print(result)
+print(result, "\n")
 
 
 # Phase flip болон Z эргүүлэлттэй холбоотой туршилт
@@ -358,4 +358,65 @@ print(result)
 #
 #
 
-print("Phase flip болон Z эргүүлэлттэй холбоотой туршилт :")
+print("\nPhase flip болон Z эргүүлэлттэй холбоотой туршилт :\n")
+
+print("> Phase flip хийлгүй hadamard-ийг дахин хэрэглэх HH|qubit>\n")
+
+qubit     = zero
+print("qubit-ийн эхний төлөв")
+print(qubit)
+
+new_state = np.dot(hadamard, qubit)
+print("hadamard нэг удаа хэрэглэсний дараа")
+print(new_state)
+
+new_state = np.dot(hadamard, new_state)
+print("hadamard-г дахин хэрэглэсний дараа")
+print(new_state, "\n")
+
+
+qubit     = one
+print("qubit-ийн эхний төлөв")
+print(qubit)
+
+new_state = np.dot(hadamard, qubit)
+print("hadamard нэг удаа хэрэглэсний дараа")
+print(new_state)
+
+new_state = np.dot(hadamard, new_state)
+print("hadamard-г дахин хэрэглэсний дараа")
+print(new_state, "\n")
+
+print("> Phase flip хийх буюу HZH|qubit>\n")
+
+qubit     = zero
+print("qubit-ийн эхний төлөв")
+print(qubit)
+
+new_state = np.dot(hadamard, qubit)
+print("hadamard нэг удаа хэрэглэсний дараа")
+print(new_state)
+
+new_state = np.dot(pauli_z, new_state)
+print("pauli-z хэрэглэсний дараа")
+print(new_state)
+
+new_state = np.dot(hadamard, new_state)
+print("hadamard дахин хэрэглэсний дараа")
+print(new_state, "\n")
+
+qubit     = one
+print("qubit-ийн эхний төлөв")
+print(qubit)
+
+new_state = np.dot(hadamard, qubit)
+print("hadamard нэг удаа хэрэглэсний дараа")
+print(new_state)
+
+new_state = np.dot(pauli_z, new_state)
+print("pauli-z хэрэглэсний дараа")
+print(new_state)
+
+new_state = np.dot(hadamard, new_state)
+print("hadamard дахин хэрэглэсний дараа")
+print(new_state, "\n")
