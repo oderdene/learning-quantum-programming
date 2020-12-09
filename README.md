@@ -13,6 +13,7 @@ Just learning quantum stuffs
  - ...
 
 # References
+ - https://docs.sympy.org/latest/modules/physics/quantum/qubit.html
  - https://medium.com/@alexandre.laplante/a-quantum-computing-library-in-48-lines-of-python-bfa242fb9acb
  - https://jarrodmcclean.com/basic-quantum-circuit-simulation-in-python/
  - https://cirq.readthedocs.io/en/stable/
