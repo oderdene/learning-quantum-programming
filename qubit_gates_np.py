@@ -189,12 +189,19 @@ print(H2_001, "\n")
 
 
 # CNOT gate буюу квант IF хэрэгжүүлэх
+#
+#   Хоёр qubit хэрэглэгдэх бөгөөд эхний qubit |0> төлөвт байвал
+#   2-р qubit төлвөө өөрчлөхгүй хэвээрээ байна. Харин |1> төлөвт
+#   орвол 2-р qubit шуут төлвөө өөрчилнө.
+#
+#
 # P0 = |0><0|, P1 = |1><1|
 # CNOT = P0⊗ ID + P1⊗ X
 #
 #  0: ───@───
 #        │
 #  1: ───X───
+#
 #
 P0        = np.dot(zero, zero.T)
 P1        = np.dot(one , one.T )
@@ -223,11 +230,16 @@ print(CNOT_11, "\n")
 
 # Bell state буюу квант орооцолдоон(aka quantum entanglement)
 #
+#   Хоёр qubit оролцох бөгөөд эхний qubit төлвөө өөрчилвөл квант
+#   орооцолдооны нөлөөгөөр хоёр дахь qubit нь даган шууд төлвөө өөрчилдөг
+#
+#
 #  |0> ──H───@───
 #            │
 #  |0> ──────X───
 #
 #  1/√2(|00>+|11>)
+#
 #
 H0_on_2    = n_kron(hadamard, ID) # 2 qubit-н эхнийх дээр Hadamard
 P0         = np.dot(zero, zero.T)
@@ -243,7 +255,7 @@ print("BellState(|0>, |0>) = 1/√2(|00>+|11>")
 print(CNOT_H0_00, "\n")
 
 
-# Measure qubit
+# Qubit дээр хэмжилт хийх туршилт
 print("Qubit дээр measure хийх туршилт :")
 print("1/√2(|00>+|11>) 2 qubit Bell State")
 q2_bellstate = normalize_state(q00+q11)
@@ -269,5 +281,18 @@ for _ in range(100):
 
 print("q0 qubit дээрхи хэмжилтүүд :")
 print(''.join(str(i) for i in measures))
-print("Хэвжилт хийсний дараах төлөв:")
+print("Хэмжилт хийсний дараах төлөв:")
 print(state)
+
+
+# TOFFOLI Gate буюу квант AND үйлдэл
+#
+#   3-н qubit хэрэглэх бөгөөд эхний хоёр qubit-үүд харгалзан
+#   |1>, |1> төлөвт орвол 3-р qubit нь төлвөө өөрчилнө.
+#
+#
+# - https://en.wikipedia.org/wiki/Toffoli_gate
+#
+#
+q000 = n_kron(one, zero, zero)
+
