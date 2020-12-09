@@ -1,3 +1,4 @@
+import random
 import numpy as np
 
 
@@ -305,16 +306,37 @@ print(np.dot(toffoli, q111), "\n")
 
 
 # Qubit дээр хэмжилт хийх туршилт
+#
+#   Qubit-ийн amplitude дагуу measure хийж үр дүнг гаргах
+#
+#
 print("Qubit дээр measure хийх туршилт :")
 print("Эхлээд 1/√2(|00>+|11>) гэсэн 2 qubit бүхий bell state үүсгэе")
 q2_bellstate = normalize_state(q00+q11)
 print(q2_bellstate)
 
+qubit_lookup_table = {
+        '1000': '00',
+        '0100': '01',
+        '0010': '10',
+        '0001': '11'
+        }
+
+q2_bellstate = [amplitude[0] for amplitude in q2_bellstate]
+
 def measure(vector):
-    measure_weights = [abs(amplitude)**2 for amplitude in vector]
-    print("measure weights", measure_weights)
+    weights = [abs(amplitude)**2 for amplitude in vector]
+    outcome = random.choices(range(len(vector)), weights)[0]
+    new_state          = np.zeros(len(vector))
+    new_state[outcome] = 1
+    return ''.join([str(int(el)) for el in new_state])
 
-measure([amplitude[0] for amplitude in q2_bellstate])
-#choices = range(len(q2_bellstate))
-#print("choices :", choices)
+print("Bell state дээр хийсэн хэмжилтийн үр дүнгүүд :")
 
+result      = ""
+repetitions = 40
+for _ in range(repetitions):
+    vector  = measure(q2_bellstate)
+    result += qubit_lookup_table[vector]+" "
+
+print(result)
