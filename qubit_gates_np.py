@@ -259,36 +259,6 @@ print("BellState(|0>, |0>) = 1/√2(|00>+|11>")
 print(CNOT_H0_00, "\n")
 
 
-# Qubit дээр хэмжилт хийх туршилт
-print("Qubit дээр measure хийх туршилт :")
-print("1/√2(|00>+|11>) 2 qubit Bell State")
-q2_bellstate = normalize_state(q00+q11)
-print(q2_bellstate)
-
-# Bell state-ийн 0-р qubit дээр 0 бит болж collapse хийх магадлалийг тооцох
-P0    = np.dot(zero, zero.T)
-P1    = np.dot( one,  one.T)
-ID    = np.eye(2, dtype=np.cfloat)
-prob0 = np.trace(np.dot(n_kron(P0, ID), np.dot(q2_bellstate, q2_bellstate.T)))
-
-measures = []
-state    = None
-for _ in range(100):
-    if (np.random.rand() < prob0):
-        result = 0
-        state  = normalize_state(np.dot(n_kron(P0, ID), q2_bellstate))
-        measures.append(result)
-    else:
-        result = 1
-        state  = normalize_state(np.dot(n_kron(P1, ID), q2_bellstate))
-        measures.append(result)
-
-print("q0 qubit дээрхи хэмжилтүүд :")
-print(''.join(str(i) for i in measures))
-print("Хэмжилт хийсний дараах төлөв:")
-print(state)
-
-
 # TOFFOLI Gate буюу квант AND үйлдэл
 #
 #   3-н qubit хэрэглэх бөгөөд эхний хоёр qubit-үүд харгалзан
@@ -332,3 +302,19 @@ print("TOFFOLI(|110>), AND үйлдэл хэрэгжинэ")
 print(np.dot(toffoli, q110), "\n")
 print("TOFFOLI(|111>), AND үйлдэл хэрэгжинэ")
 print(np.dot(toffoli, q111), "\n")
+
+
+# Qubit дээр хэмжилт хийх туршилт
+print("Qubit дээр measure хийх туршилт :")
+print("Эхлээд 1/√2(|00>+|11>) гэсэн 2 qubit бүхий bell state үүсгэе")
+q2_bellstate = normalize_state(q00+q11)
+print(q2_bellstate)
+
+def measure(vector):
+    measure_weights = [abs(amplitude)**2 for amplitude in vector]
+    print("measure weights", measure_weights)
+
+measure([amplitude[0] for amplitude in q2_bellstate])
+#choices = range(len(q2_bellstate))
+#print("choices :", choices)
+
