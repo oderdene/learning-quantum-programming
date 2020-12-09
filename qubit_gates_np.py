@@ -420,3 +420,51 @@ print(new_state)
 new_state = np.dot(hadamard, new_state)
 print("hadamard дахин хэрэглэсний дараа")
 print(new_state, "\n")
+
+
+# Controlled Z gate
+#
+#   CNOT gate-тэй төстэй өөрөөр хэлбэл CNOT бол CX гэсэн үг.
+#   Тэгвэл Controlled Z gate нь CZ буюу эхний qubit нь |1> төлөвт
+#   ирвэл хоёр дахь qubit-ийг Z тэнхлэгийн дагуу эргүүлнэ.
+#   Эхний qubit |0> төлөвт байвал хоёр дахь qubit-д өөрчлөлтгүй.
+#   Controller-{X,Z,Y} гэх мэт ижилхэн зарчимтай үйлдлүүд байж болно.
+#
+#
+# P0 = |0><0|, P1 = |1><1|
+# CZ = P0⊗ ID + P1⊗ Z
+#
+#  0: ───@───
+#        │
+#  1: ───Z───
+#
+# - https://en.wikipedia.org/wiki/Quantum_logic_gate
+#   хуудсанд Controled(CX, CY, CZ) хэсгээс дэлгэрэнгүй харж болно.
+#
+#
+
+print("\nControlled-Z gate ийн туршилтууд :\n")
+
+P0      = np.dot(zero, zero.T)
+P1      = np.dot(one , one.T )
+CZ_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_z)
+
+# CZ(|00>) ->
+CZ_00 = np.dot(CZ_on_2, q00)
+print("CZ(|00>)")
+print(CZ_00, "\n")
+
+# CZ(|01>) ->
+CZ_01 = np.dot(CZ_on_2, q01)
+print("CZ(|01>)")
+print(CZ_01, "\n")
+
+# CZ(|10>) ->
+CZ_10 = np.dot(CZ_on_2, q10)
+print("CZ(|10>)")
+print(CZ_10, "\n")
+
+# CZ(|11>) ->
+CZ_11 = np.dot(CZ_on_2, q11)
+print("CZ(|11>)")
+print(CZ_11, "\n")
