@@ -202,6 +202,8 @@ print(H2_001, "\n")
 #        │
 #  1: ───X───
 #
+# - https://en.wikipedia.org/wiki/Controlled_NOT_gate
+#
 #
 P0        = np.dot(zero, zero.T)
 P1        = np.dot(one , one.T )
@@ -240,6 +242,7 @@ print(CNOT_11, "\n")
 #
 #  1/√2(|00>+|11>)
 #
+# - https://en.wikipedia.org/wiki/Bell_state
 #
 H0_on_2    = n_kron(hadamard, ID) # 2 qubit-н эхнийх дээр Hadamard
 P0         = np.dot(zero, zero.T)
