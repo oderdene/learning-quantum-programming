@@ -244,6 +244,7 @@ print(CNOT_11, "\n")
 #
 # - https://en.wikipedia.org/wiki/Bell_state
 #
+#
 H0_on_2    = n_kron(hadamard, ID) # 2 qubit-н эхнийх дээр Hadamard
 P0         = np.dot(zero, zero.T)
 P1         = np.dot(one , one.T )
@@ -297,5 +298,37 @@ print(state)
 # - https://en.wikipedia.org/wiki/Toffoli_gate
 #
 #
-q000 = n_kron(one, zero, zero)
+print("\n TOFFOLI Gate буюу квант AND үйлдэл\n")
 
+q000 = n_kron(zero, zero, zero) # |000> -> |000>
+q001 = n_kron(zero, zero,  one) # |001> -> |001>
+q101 = n_kron( one, zero,  one) # |101> -> |101>
+q100 = n_kron( one, zero, zero) # |100> -> |100>
+q011 = n_kron(zero,  one,  one) # |011> -> |011>
+q010 = n_kron(zero,  one, zero) # |010> -> |010>
+q110 = n_kron( one,  one, zero) # |110> -> |111>, AND
+q111 = n_kron( one,  one,  one) # |111> -> |110>, AND
+
+toffoli = np.array(
+        [[1, 0, 0, 0, 0, 0, 0, 0],
+         [0, 1, 0, 0, 0, 0, 0, 0],
+         [0, 0, 1, 0, 0, 0, 0, 0],
+         [0, 0, 0, 1, 0, 0, 0, 0],
+         [0, 0, 0, 0, 1, 0, 0, 0],
+         [0, 0, 0, 0, 0, 1, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 1],
+         [0, 0, 0, 0, 0, 0, 1, 0]],
+        dtype=np.cfloat)
+
+print("TOFFOLI(|000>)")
+print(np.dot(toffoli, q000), "\n")
+print("TOFFOLI(|001>)")
+print(np.dot(toffoli, q001), "\n")
+print("TOFFOLI(|101>)")
+print(np.dot(toffoli, q101), "\n")
+print("TOFFOLI(|011>)")
+print(np.dot(toffoli, q011), "\n")
+print("TOFFOLI(|110>), AND үйлдэл хэрэгжинэ")
+print(np.dot(toffoli, q110), "\n")
+print("TOFFOLI(|111>), AND үйлдэл хэрэгжинэ")
+print(np.dot(toffoli, q111), "\n")
