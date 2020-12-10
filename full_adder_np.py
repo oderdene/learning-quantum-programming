@@ -68,8 +68,22 @@ def measure(amplitudes, repetitions=10):
     return qubit.qubit_values
 
 
+# Full Adder
+#
+#   Ерөнхийдөө XOR үйлдлээр хоёр битийг нэмэх бөгөөд сануулсан оронгийн
+#   битийг мөн адил XOR үйлдлээр нэмнэ. AND үйлдлээр эхний нэмэгдхүүн
+#   дээр болон сануулсан орон дээр нэмж сануулах орон үүсэх эсэхийг мэдэн
+#   ялгаж авна. Гаралтын сануулах орон OR үйлдлээр нэгтгэгдэнэ.
+#
+#   Дэлгэрэнгүй диаграм :
+#
+#     - https://github.com/sharavsambuu/learning-quantum-programming/blob/master/images/fulladder.jpg
+#
+#
 
 def sum_qubits(a_bit, b_bit, carry_in):
+    q0, q1, q2, q3, q4, q5, q6, q7 = zero, zero, zero, zero, zero, zero, zero, zero
+
     return None, None
 
 
