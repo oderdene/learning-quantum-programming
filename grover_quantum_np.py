@@ -96,9 +96,15 @@ def apply_cnot(q0, q_target):
 #
 #
 
-def oracle_00():
+def grover():
     print("|00> төлөв хайхад зориулагдсан oracle")
+    q0, q1 = zero, zero
+    q0 = np.dot(hadamard, q0)
+    q1 = np.dot(hadamard, q1)
 
+    q0_measure, = measure([a[0] for a in q0])
+    q1_measure, = measure([a[0] for a in q1])
+    print("measure |q0q1> = |{}{}>".format(q0_measure, q1_measure))
     pass
 
 
@@ -106,5 +112,5 @@ def oracle_00():
 
 if __name__=="__main__":
     print("Grover's algorithm")
-    oracle_00()
+    grover()
     pass
