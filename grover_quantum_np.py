@@ -94,7 +94,18 @@ def apply_cz(q0, q_target):
     CNOT_on_2  = n_kron(P0, ID2) + n_kron(P1, pauli_z)
     q_combined    = n_kron(q0, q_target)
     CNOT_0_target = np.dot(CNOT_on_2, q_combined)
+    print("q_combined:")
+    print(q_combined)
+    print("CNOT_on_2:")
+    print(CNOT_on_2)
+    print("CNOT_0_target:")
+    print(CNOT_0_target)
+    #print(matrix_to_qubit(CNOT_0_target))
+    print("matrix to qubit free symbols:")
+    print(matrix_to_qubit(CNOT_0_target).free_symbols)
+    print("######")
     qubit_values  = list(matrix_to_qubit(CNOT_0_target).free_symbols)[0].qubit_values
+    print(qubit_values)
     _, updated_target = qubit_values
     q_target = (lambda x: zero if x==0 else one)(updated_target)
     return q_target
@@ -117,7 +128,10 @@ def grover():
     q0 = np.dot(pauli_x, q0)
     q1 = np.dot(pauli_x, q1)
 
-    
+    q1 = apply_cz(q0, q1)
+
+    q0 = np.dot(hadamard, q0)
+    q1 = np.dot(hadamard, q1)
 
     q0_measure, = measure([a[0] for a in q0])
     q1_measure, = measure([a[0] for a in q1])
