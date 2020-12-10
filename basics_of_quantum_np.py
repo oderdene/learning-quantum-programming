@@ -60,6 +60,12 @@ hadamard = np.array(
 
 ID = np.eye(2, dtype=np.cfloat)
 
+swap = np.array(
+        [[1, 0, 0, 0],
+         [0, 0, 1, 0],
+         [0, 1, 0, 0],
+         [0, 0, 0, 1]],
+        dtype=np.cfloat)
 
 # |0> болон |1> төлвүүдээр цэнэглэгдсэн qubit-үүд
 q0 = zero
@@ -469,3 +475,29 @@ print(CZ_10, "\n")
 CZ_11 = np.dot(CZ_on_2, q11)
 print("CZ(|11>)")
 print(CZ_11, "\n")
+
+
+# SWAP gate
+#
+# Хоёр qubit төлвийг хооронд нь солино
+#
+#
+print("\nSWAP gate ийн туршилтууд :\n")
+
+# SWAP(|00>) -> |00>
+q00_swapped = np.dot(swap, q00)
+print("SWAP(|00>)\n", q00_swapped)
+
+# SWAP(|01>) -> |10>
+q01_swapped = np.dot(swap, q01)
+print("SWAP(|01>)\n", q01_swapped)
+
+# SWAP(|10>) -> |01>
+q10_swapped = np.dot(swap, q10)
+print("SWAP(|10>)\n", q10_swapped)
+
+# SWAP(|11>) -> |11>
+q11_swapped = np.dot(swap, q11)
+print("SWAP(|11>)\n", q11_swapped)
+
+
