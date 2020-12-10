@@ -5,8 +5,11 @@ Just learning quantum stuffs
  - Үндсэн квант gate-үүдийг numpy дээр хэрэгжүүлэлж харах [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lTTULxuOql2VDmjPZ5Qcdeitpy3KFfRW?usp=sharing)
 
 # Tasks
- - Done    : Implement Grover's algorithm in classic way
- - ONGOING : Implement Grover's algorithm using quantum circuit
+ - ONGOIN : Implement AND gate or Toffoli gate with numpy
+ - Implement OR gate with numpy
+ - Implement quantum full adder with numpy
+ - Implement addition of two integers with numpy
+ - ONHOLD : Implement Grover's algorithm using quantum circuit
  - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit
  - Implement Shor's algorithm 
