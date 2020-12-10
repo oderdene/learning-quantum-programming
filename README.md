@@ -16,7 +16,7 @@ Just learning quantum stuffs
  - DONE : Implement quantum XOR with numpy
  - DONE : Implement quantum full adder with numpy
  - DONE : Implement quantum addition of two integers with numpy
- - ONHOLD  : Implement Grover's algorithm using quantum circuit
+ - ONGOING : Implement Grover's algorithm using quantum circuit
  - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit
  - Implement Shor's algorithm
