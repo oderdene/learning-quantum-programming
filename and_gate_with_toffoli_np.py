@@ -1,4 +1,7 @@
 import numpy as np
+import sympy as sp
+from sympy.physics.quantum.qubit import matrix_to_qubit, Qubit
+from sympy.physics.quantum.represent import represent
 
 
 def normalize_state(state):
@@ -56,17 +59,23 @@ def AND(first_bit, second_bit):
         q0 = np.dot(pauli_x, q0)
     if second_bit==1:
         q1 = np.dot(pauli_x, q1)
-    print(q0)
-    print(q1)
-    return None
+
+    q_target   = zero
+    q_combined = n_kron(q0, q1, q_target)
+
+    result = np.dot(toffoli, q_combined)
+    _, _, target_bit= list(matrix_to_qubit(result).free_symbols)[0].qubit_values
+
+    return target_bit
 
 
 if __name__=="__main__":
-    print("|00>")
     res = AND(0, 0)
-    print("|01>")
+    print("AND(|00>)=", res)
     res = AND(0, 1)
-    print("|10>")
+    print("AND(|01>)=", res)
     res = AND(1, 0)
-    print("|11>")
+    print("AND(|10>)=", res)
     res = AND(1, 1)
+    print("AND(|11>)=", res)
+
