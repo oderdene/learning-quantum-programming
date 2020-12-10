@@ -115,9 +115,12 @@ def sum_qubits(a_bit, b_bit, carry_in):
     q7 = apply_toffoli(q3, q6, q7)
     q7 = np.dot(pauli_x, q7) # carry out
 
+    sum_qubit = measure([a[0] for a in q5])
+    sum_bit,  = sum_qubit
+    carry_qubit = measure([a[0] for a in q7])
+    carry_bit,  = carry_qubit
 
-
-    return None, None
+    return sum_bit, carry_bit
 
 
 if __name__=="__main__":
