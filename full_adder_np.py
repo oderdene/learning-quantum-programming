@@ -68,6 +68,18 @@ def measure(amplitudes, repetitions=10):
     return qubit.qubit_values
 
 
+def assign_bit(qubit, bit):
+    if bit==1:
+        return np.dot(pauli_x, qubit)
+    return qubit
+
+def apply_toffoli(q0, q1, q_target):
+    return q_target
+
+def apply_cnot(q0, q_target):
+    return q_target
+
+
 # Full Adder
 #
 #   Ерөнхийдөө XOR үйлдлээр хоёр битийг нэмэх бөгөөд сануулсан оронгийн
@@ -80,9 +92,30 @@ def measure(amplitudes, repetitions=10):
 #     - https://github.com/sharavsambuu/learning-quantum-programming/blob/master/images/fulladder.jpg
 #
 #
-
 def sum_qubits(a_bit, b_bit, carry_in):
     q0, q1, q2, q3, q4, q5, q6, q7 = zero, zero, zero, zero, zero, zero, zero, zero
+
+    q0 = assign_bit(q0, a_bit)
+    q1 = assign_bit(q1, b_bit)
+    q3 = assign_bit(q3, carry_in)
+
+    # AND1
+    q3 = apply_toffoli(q0, q1, q3)
+    # XOR1
+    q4 = apply_cnot(q0, q4)
+    q4 = apply_cnot(q1, q4)
+    # XOR2
+    q5 = apply_cnot(q2, q5)
+    q5 = apply_cnot(q4, q5) # sum
+    # AND2
+    q6 = apply_toffoli(q2, q4, q6)
+    # OR
+    q3 = np.dot(pauli_x, q3)
+    q6 = np.dot(pauli_x, q6)
+    q7 = apply_toffoli(q3, q6, q7)
+    q7 = np.dot(pauli_x, q7) # carry out
+
+
 
     return None, None
 
