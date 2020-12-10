@@ -69,7 +69,43 @@ def measure(amplitudes, repetitions=10):
 
 
 
+def sum_qubits(a_bit, b_bit, carry_in):
+    return None, None
 
 
 if __name__=="__main__":
+    print("Full adder бит нэмэх хүснэгт:")
+
+    a_bit, b_bit, carry_in = 1, 1, 1
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 0, 1, 1
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 1, 0, 1
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 0, 0, 1
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 1, 1, 0
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 0, 1, 0
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 1, 0, 0
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
+    a_bit, b_bit, carry_in = 0, 0, 0
+    summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
+    print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
+
     pass
