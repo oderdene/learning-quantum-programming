@@ -8,8 +8,9 @@ Just learning quantum stuffs
  - Хоёр бүхэл тоо нэмэх үйлдлийг cirq дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y4K3-VCsHP9S2ipAXOC2X3wPgVR39WDx?usp=sharing)
 
 # Tasks
- - DONE : Implement quantum AND gate or Toffoli gate with numpy
- - DONE : Implement quantum OR gate with numpy
+ - DONE : Implement quantum AND or Toffoli gate with numpy
+ - DONE : Implement quantum OR with numpy
+ - ONGOING : Implement quantum XOR with numpy
  - Implement quantum full adder with numpy
  - Implement addition of two integers with numpy
  - ONHOLD : Implement Grover's algorithm using quantum circuit
