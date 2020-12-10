@@ -3,6 +3,8 @@ Just learning quantum stuffs
 
 # Notebooks
  - Үндсэн квант gate-үүдийг numpy дээр хэрэгжүүлэлж харах [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1lTTULxuOql2VDmjPZ5Qcdeitpy3KFfRW?usp=sharing)
+ - Классик AND үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1o7RaXZHyqmbOUMnlBC01AdJrZpG26Reb?usp=sharing)
+ - Хоёр бүхэл тоо нэмэх үйлдлийг cirq дээр хэрэгжүүлэх[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y4K3-VCsHP9S2ipAXOC2X3wPgVR39WDx?usp=sharing)
 
 # Tasks
  - DONE : Implement AND gate or Toffoli gate with numpy
@@ -12,7 +14,7 @@ Just learning quantum stuffs
  - ONHOLD : Implement Grover's algorithm using quantum circuit
  - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit
- - Implement Shor's algorithm 
+ - Implement Shor's algorithm
  - ...
 
 # References
