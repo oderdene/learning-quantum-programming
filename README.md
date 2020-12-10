@@ -6,14 +6,15 @@ Just learning quantum stuffs
  - Классик AND үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1o7RaXZHyqmbOUMnlBC01AdJrZpG26Reb?usp=sharing)
  - Классик OR үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1jv-DN1jgCBsTxAt57vKbqXjUcEVGPVNT?usp=sharing)
  - Классик XOR үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kB8gdOBw4-80D0oGRBmpALuXqvi6Ehme?usp=sharing)
+ - Классик бит нэмэх үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1e0YLdV0JiLkbA5GcrjoHbkG9lp8aevna?usp=sharing)
  - Хоёр бүхэл тоо нэмэх үйлдлийг cirq дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y4K3-VCsHP9S2ipAXOC2X3wPgVR39WDx?usp=sharing)
 
 # Tasks
  - DONE : Implement quantum AND or Toffoli gate with numpy
  - DONE : Implement quantum OR with numpy
  - DONE : Implement quantum XOR with numpy
- - ONGOING : Implement quantum full adder with numpy
- - Implement addition of two integers with numpy
+ - DONE : Implement quantum full adder with numpy
+ - Implement quantum addition of two integers with numpy
  - ONHOLD : Implement Grover's algorithm using quantum circuit
  - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit

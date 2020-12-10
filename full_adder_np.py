@@ -67,16 +67,28 @@ def measure(amplitudes, repetitions=10):
 
     return qubit.qubit_values
 
-
 def assign_bit(qubit, bit):
     if bit==1:
         return np.dot(pauli_x, qubit)
     return qubit
 
 def apply_toffoli(q0, q1, q_target):
+    q_combined = n_kron(q0, q1, q_target)
+    new_state  = np.dot(toffoli, q_combined)
+    qubit_values = list(matrix_to_qubit(new_state).free_symbols)[0].qubit_values
+    _, _, updated_target = qubit_values
+    q_target = (lambda x: zero if x==0 else one)(updated_target)
     return q_target
 
 def apply_cnot(q0, q_target):
+    P0         = np.dot(zero, zero.T)
+    P1         = np.dot(one , one.T )
+    CNOT_on_2  = n_kron(P0, ID2) + n_kron(P1, pauli_x)
+    q_combined    = n_kron(q0, q_target)
+    CNOT_0_target = np.dot(CNOT_on_2, q_combined)
+    qubit_values  = list(matrix_to_qubit(CNOT_0_target).free_symbols)[0].qubit_values
+    _, updated_target = qubit_values
+    q_target = (lambda x: zero if x==0 else one)(updated_target)
     return q_target
 
 
@@ -97,7 +109,7 @@ def sum_qubits(a_bit, b_bit, carry_in):
 
     q0 = assign_bit(q0, a_bit)
     q1 = assign_bit(q1, b_bit)
-    q3 = assign_bit(q3, carry_in)
+    q2 = assign_bit(q2, carry_in)
 
     # AND1
     q3 = apply_toffoli(q0, q1, q3)
@@ -115,9 +127,9 @@ def sum_qubits(a_bit, b_bit, carry_in):
     q7 = apply_toffoli(q3, q6, q7)
     q7 = np.dot(pauli_x, q7) # carry out
 
-    sum_qubit = measure([a[0] for a in q5])
-    sum_bit,  = sum_qubit
+    sum_qubit   = measure([a[0] for a in q5])
     carry_qubit = measure([a[0] for a in q7])
+    sum_bit,    = sum_qubit
     carry_bit,  = carry_qubit
 
     return sum_bit, carry_bit
