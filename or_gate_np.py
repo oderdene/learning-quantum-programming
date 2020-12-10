@@ -68,32 +68,47 @@ def measure(amplitudes, repetitions=10):
     return q_bit.qubit_values
 
 
-def QAND(first_bit, second_bit):
+# OR circuit загвар
+#
+# q0       : ──X──@─────────
+#                 |
+# q1       : ──X──@─────────
+#                 |
+# q_target : ─────X──X──M───
+
+def QOR(first_bit, second_bit):
     q0 = zero
     q1 = zero
     if first_bit==1:
         q0 = np.dot(pauli_x, q0)
     if second_bit==1:
         q1 = np.dot(pauli_x, q1)
-
     q_target   = zero
+
+    # OR circuit
+    q0         = np.dot(pauli_x, q0)
+    q1         = np.dot(pauli_x, q1)
     q_combined = n_kron(q0, q1, q_target)
 
     new_state  = np.dot(toffoli, q_combined)
 
-    qubits = measure([a[0] for a in new_state])
+    _, _, q3 = list(matrix_to_qubit(new_state).free_symbols)[0].qubit_values
+    q_target = (lambda x: zero if x==0 else one)(q3)
 
-    _, _, result = qubits
+    q_target = np.dot(pauli_x, q_target)
+
+    qubits  = measure([a[0] for a in q_target])
+    result, = qubits
     return result
 
 
 if __name__=="__main__":
-    res = QAND(0, 0)
-    print("AND(|00>)=", res)
-    res = QAND(0, 1)
-    print("AND(|01>)=", res)
-    res = QAND(1, 0)
-    print("AND(|10>)=", res)
-    res = QAND(1, 1)
-    print("AND(|11>)=", res)
+    res = QOR(0, 0)
+    print("OR(|00>)=", res)
+    res = QOR(0, 1)
+    print("OR(|01>)=", res)
+    res = QOR(1, 0)
+    print("OR(|10>)=", res)
+    res = QOR(1, 1)
+    print("OR(|11>)=", res)
 

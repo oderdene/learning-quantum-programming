@@ -63,9 +63,9 @@ def measure(amplitudes, repetitions=10):
         measurements.append(new_state)
 
     sample = random.choice(measurements)
-    q_bit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
+    qubit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
 
-    return q_bit.qubit_values
+    return qubit.qubit_values
 
 
 def QAND(first_bit, second_bit):
