@@ -12,7 +12,7 @@ Just learning quantum stuffs
  - DONE : Implement quantum AND or Toffoli gate with numpy
  - DONE : Implement quantum OR with numpy
  - DONE : Implement quantum XOR with numpy
- - Implement quantum full adder with numpy
+ - ONGOING : Implement quantum full adder with numpy
  - Implement addition of two integers with numpy
  - ONHOLD : Implement Grover's algorithm using quantum circuit
  - Implement Deutsch–Jozsa algorithm
