@@ -1,7 +1,7 @@
+import random
 import numpy as np
 import sympy as sp
-from sympy.physics.quantum.qubit import matrix_to_qubit, Qubit
-from sympy.physics.quantum.represent import represent
+from sympy.physics.quantum.qubit import matrix_to_qubit
 
 
 def normalize_state(state):
@@ -52,7 +52,23 @@ toffoli = np.array(
         dtype=np.cfloat)
 
 
-def AND(first_bit, second_bit):
+def measure(amplitudes, repetitions=10):
+    measurements = []
+
+    for _ in range(repetitions):
+        weights   = [abs(amplitude)**2 for amplitude in amplitudes]
+        outcome   = random.choices(range(len(amplitudes)), weights)[0]
+        new_state = np.zeros((len(amplitudes), 1))
+        new_state[outcome][0] = 1
+        measurements.append(new_state)
+
+    sample = random.choice(measurements)
+    q_bit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
+
+    return q_bit.qubit_values
+
+
+def QAND(first_bit, second_bit):
     q0 = zero
     q1 = zero
     if first_bit==1:
@@ -63,19 +79,21 @@ def AND(first_bit, second_bit):
     q_target   = zero
     q_combined = n_kron(q0, q1, q_target)
 
-    result = np.dot(toffoli, q_combined)
-    _, _, target_bit= list(matrix_to_qubit(result).free_symbols)[0].qubit_values
+    new_state  = np.dot(toffoli, q_combined)
 
-    return target_bit
+    qubits = measure([a[0] for a in new_state])
+
+    _, _, result = qubits
+    return result
 
 
 if __name__=="__main__":
-    res = AND(0, 0)
+    res = QAND(0, 0)
     print("AND(|00>)=", res)
-    res = AND(0, 1)
+    res = QAND(0, 1)
     print("AND(|01>)=", res)
-    res = AND(1, 0)
+    res = QAND(1, 0)
     print("AND(|10>)=", res)
-    res = AND(1, 1)
+    res = QAND(1, 1)
     print("AND(|11>)=", res)
 
