@@ -59,10 +59,11 @@ print(q_np0.shape)
 print(q_np0)
 
 print("Numpy-аас Qubit-рүү хөрвүүлэх")
+# https://stackoverflow.com/questions/30018977/how-can-i-get-a-list-of-the-symbols-in-a-sympy-expression
 new_q = matrix_to_qubit(q_np0)
-print(new_q)
+print(new_q.free_symbols)
 new_q = matrix_to_qubit(np.array([[1],[0],[1],[0]]))
-print(new_q)
+print(new_q.free_symbols)
 new_q = matrix_to_qubit(np.array([[1],[0],[0],[0]]))
 print(new_q)
 new_q = matrix_to_qubit(np.array([[0],[1],[0],[0]]))
