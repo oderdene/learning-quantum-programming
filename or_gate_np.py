@@ -75,6 +75,8 @@ def measure(amplitudes, repetitions=10):
 # q1       : ──X──@─────────
 #                 |
 # q_target : ─────X──X──M───
+#
+#
 
 def QOR(first_bit, second_bit):
     q0 = zero
