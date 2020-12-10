@@ -89,8 +89,22 @@ def apply_cnot(q0, q_target):
     return q_target
 
 
+# Grover-ийн алгоритм
+#
+# Лавлагаа :
+#  - https://en.wikipedia.org/wiki/Grover%27s_algorithm
+#
+#
+
+def oracle_00():
+    print("|00> төлөв хайхад зориулагдсан oracle")
+
+    pass
+
+
 
 
 if __name__=="__main__":
     print("Grover's algorithm")
+    oracle_00()
     pass
