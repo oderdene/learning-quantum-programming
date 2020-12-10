@@ -88,6 +88,17 @@ def apply_cnot(q0, q_target):
     q_target = (lambda x: zero if x==0 else one)(updated_target)
     return q_target
 
+def apply_cz(q0, q_target):
+    P0         = np.dot(zero, zero.T)
+    P1         = np.dot(one , one.T )
+    CNOT_on_2  = n_kron(P0, ID2) + n_kron(P1, pauli_z)
+    q_combined    = n_kron(q0, q_target)
+    CNOT_0_target = np.dot(CNOT_on_2, q_combined)
+    qubit_values  = list(matrix_to_qubit(CNOT_0_target).free_symbols)[0].qubit_values
+    _, updated_target = qubit_values
+    q_target = (lambda x: zero if x==0 else one)(updated_target)
+    return q_target
+
 
 # Grover-ийн алгоритм
 #
@@ -99,8 +110,14 @@ def apply_cnot(q0, q_target):
 def grover():
     print("|00> төлөв хайхад зориулагдсан oracle")
     q0, q1 = zero, zero
+
     q0 = np.dot(hadamard, q0)
     q1 = np.dot(hadamard, q1)
+
+    q0 = np.dot(pauli_x, q0)
+    q1 = np.dot(pauli_x, q1)
+
+    
 
     q0_measure, = measure([a[0] for a in q0])
     q1_measure, = measure([a[0] for a in q1])
