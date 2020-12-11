@@ -13,6 +13,12 @@ def n_kron(*args):
         result = np.kron(result, op)
     return result
 
+def n_kron_list(args):
+    result = np.array([[1.+0.j]])
+    for op in args:
+        result = np.kron(result, op)
+    return result
+
 # |0>
 zero = np.array([[1.+0.j],
                  [0.+0.j]], dtype=np.cfloat)
@@ -64,9 +70,55 @@ def measure(amplitudes, repetitions=10):
     qubit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
     return qubit.qubit_values
 
+def apply_pauli_x(psi, loc):
+    op_list      = [ID2]*8
+    op_list[loc] = pauli_x
+    op_matrix    = n_kron_list(op_list)
+    return np.dot(op_matrix, psi)
 
-def assign_bit(psi, qubit_loc, bit):
-    pass
+# Олон qubit дээр Toffoli хэрэглэх талаар лавлагаа
+# - https://quantumcomputing.stackexchange.com/questions/13143/how-to-make-toffoli-gate-using-matrix-form-in-multi-qubits-system
+def apply_toffoli(psi, control0_loc, control1_loc, target_loc):
+    def T(n, a, b, x) :
+        m = 2**(n-a)+2**(n-b)
+        d = lambda i : 2**(n-x) if (2**(n-x)) & i == 0 else -(2**(n-x))
+        T = np.array([([0] * 2**n)] * 2**n)
+        for i in range(2**n) :
+            for j in range(2**n) :
+                T[i][j] = 1 if (i & m == m and j == d(i) + i) or (i & m != m and j == i) else 0
+        return T
+    op_matrix = T(8, control0_loc, control1_loc, target_loc)
+    return np.dot(op_matrix, psi)
+
+# Олон qubit дээр gate хэрэглэх лавлагаа
+# - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
+# - https://quantumcomputing.stackexchange.com/questions/5179/how-to-construct-matrix-of-regular-and-flipped-2-qubit-cnot
+#
+# Хоёр qubit систем дээр
+#   P0 = |0><0|, P1 = |1><1|
+#   CNOT = P0⊗ ID + P1⊗ X
+#
+# Олон qubit систем дээр жишээ нь 10 qubit систем дээр 3-р qubit нь
+# control qubit, 9-р qubit нь target qubit бол CNOT матриц дараах
+# байдлаар үүсгэгдэнэ.
+#
+#   Хэрэв 3-р qubit |0> бол 9-р qubit-ийг хэвээр үлдээнэ
+#     I⊗I⊗|0⟩⟨0|⊗I⊗I⊗I⊗I⊗I⊗I⊗I
+#   эсрэгээрээ |1> бол
+#     I⊗I⊗|1⟩⟨1|⊗I⊗I⊗I⊗I⊗I⊗X⊗I
+#
+#
+def apply_cnot(psi, control_loc, target_loc):
+    P0                     = np.dot(zero, zero.T)
+    P1                     = np.dot(one , one.T )
+    op_list_0              = [ID2]*8
+    op_list_0[control_loc] = P0
+    op_list_1              = [ID2]*8
+    op_list_1[control_loc] = P1
+    op_list_1[ target_loc] = pauli_x
+    op_matrix = n_kron_list(op_list_0)+n_kron_list(op_list_1)
+    return np.dot(op_matrix, psi)
+
 
 # Full Adder
 #
@@ -82,17 +134,37 @@ def assign_bit(psi, qubit_loc, bit):
 #
 def sum_qubits(a_bit, b_bit, carry_in):
     # |ψ> = |00000000>
-    psi = n_kron(zero, zero, zero, zero, zero, zero, zero, zero)
-    print(matrix_to_qubit(psi))
-    psi = assign_bit(psi, 0, a_bit) # q0=a_bit
-    print("q0=a_bit")
+    psi = n_kron_list([zero]*8)
 
-    print(matrix_to_qubit(psi))
-    #q1 = assign_bit(q1, b_bit)
-    #q2 = assign_bit(q2, carry_in)
+    if a_bit==1:
+        psi = apply_pauli_x(psi, 0)
+    if b_bit==1:
+        psi = apply_pauli_x(psi, 1)
+    if carry_in==1:
+        psi = apply_pauli_x(psi, 2)
 
+    # AND1
+    psi = apply_toffoli(psi, 0, 1, 3)
+    # XOR1
+    psi = apply_cnot(psi, 0, 4)
+    psi = apply_cnot(psi, 1, 4)
+    # XOR2
+    psi = apply_cnot(psi, 2, 5)
+    psi = apply_cnot(psi, 4, 5) # sum
+    # AND2
+    psi = apply_toffoli(psi, 2, 4, 6)
+    # OR
+    psi = apply_pauli_x(psi, 3)
+    psi = apply_pauli_x(psi, 6)
+    psi = apply_toffoli(psi, 3, 6, 7)
+    psi = apply_pauli_x(psi, 7) # carry out
 
-    return None, None
+    qubit         = matrix_to_qubit(psi)
+    print(qubit)
+    qubit_values  = list(qubit.free_symbols)[0].qubit_values
+    _,_,_,_,_,sum_bit,_,carry_bit = qubit_values
+
+    return sum_bit, carry_bit
 
 
 if __name__=="__main__":
@@ -102,7 +174,6 @@ if __name__=="__main__":
     summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
     print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
 
-"""
     a_bit, b_bit, carry_in = 0, 1, 1
     summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
     print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
@@ -130,5 +201,6 @@ if __name__=="__main__":
     a_bit, b_bit, carry_in = 0, 0, 0
     summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
     print("a={} b={} carry_in={} sum={} carry_out={}".format(a_bit, b_bit, carry_in, summed, carry_out))
-"""
+
+    pass
 

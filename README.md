@@ -11,6 +11,7 @@ Just learning quantum stuffs
  - Хоёр бүхэл тоо нэмэх үйлдлийг cirq дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y4K3-VCsHP9S2ipAXOC2X3wPgVR39WDx?usp=sharing)
 
 # Tasks
+ - URGENT : Make every numpy experiments as N qubit matrix 
  - DONE : Implement quantum AND or Toffoli gate with numpy
  - DONE : Implement quantum OR with numpy
  - DONE : Implement quantum XOR with numpy
