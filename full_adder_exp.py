@@ -173,28 +173,42 @@ if __name__=="__main__":
     # |11001>
     q11001 = n_kron(one, one, zero, zero, one)
 
-    print("Quantum gates testing...\n")
-
+    print("\n\nCNOT testing...\n")
     q0 = q11001
-    print(matrix_to_qubit(q0), "\n")
-
     print("CNOT_0_2(|11001>) => |11101>")
     q0 = apply_cnot(q0, 0, 2, 5)
     print(matrix_to_qubit(q0))
-
     q0 = q11001
     print("CNOT_2_4(|11001>) => |11001>")
     q0 = apply_cnot(q0, 2, 4, 5)
     print(matrix_to_qubit(q0))
-
     q0 = q11001
     print("CNOT_1_4(|11001>) => |11000>")
     q0 = apply_cnot(q0, 1, 4, 5)
     print(matrix_to_qubit(q0))
-
     q0 = q11001
     print("CNOT_4_1(|11001>) => |10001>")
     q0 = apply_cnot(q0, 4, 1, 5)
+    print(matrix_to_qubit(q0))
+
+    print("\n\nPauli-X testing...\n")
+    q0 = q11001
+    print("X_0(|11001>) => |01001>")
+    q0 = apply_pauli_x(q0, 0, 5)
+    print(matrix_to_qubit(q0))
+    q0 = q11001
+    print("X_3(|11001>) => |11011>")
+    q0 = apply_pauli_x(q0, 3, 5)
+    print(matrix_to_qubit(q0))
+    q0 = q11001
+    print("X_4(|11001>) => |11000>")
+    q0 = apply_pauli_x(q0, 4, 5)
+    print(matrix_to_qubit(q0))
+
+    print("\n\nToffoli testing...\n")
+    q0 = q11001
+    print("Toffoli_0_1_2(|11001>) => |11101>")
+    q0 = apply_toffoli(q0, 0, 1, 2, 5)
     print(matrix_to_qubit(q0))
 
 
