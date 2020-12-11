@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from sympy.physics.quantum.qubit import matrix_to_qubit
 
 
 def normalize_state(state):
@@ -73,35 +74,35 @@ q1 = one
 
 x_flipped_q0 = np.dot(pauli_x, q0)
 print("Pauli-X(|0>)")
-print(x_flipped_q0, "\n")
+print(matrix_to_qubit(x_flipped_q0), "\n")
 
 x_flipped_q1 = np.dot(pauli_x, q1)
 print("Pauli-X(|1>)")
-print(x_flipped_q1, "\n")
+print(matrix_to_qubit(x_flipped_q1), "\n")
 
 y_flipped_q0 = np.dot(pauli_y, q0)
 print("Pauli-Y(|0>)")
-print(y_flipped_q0, "\n")
+print(matrix_to_qubit(y_flipped_q0), "\n")
 
 y_flipped_q1 = np.dot(pauli_y, q1)
 print("Pauli-Y(|1>)")
-print(y_flipped_q1, "\n")
+print(matrix_to_qubit(y_flipped_q1), "\n")
 
 z_flipped_q0 = np.dot(pauli_z, q0)
 print("Pauli-Z(|0>)")
-print(z_flipped_q0, "\n")
+print(matrix_to_qubit(z_flipped_q0), "\n")
 
 z_flipped_q1 = np.dot(pauli_z, q1)
 print("Pauli-Z(|1>)")
-print(z_flipped_q1, "\n")
+print(matrix_to_qubit(z_flipped_q1), "\n")
 
 hadamard_q0 = np.dot(hadamard, q0)
 print("Hadamard(|0>) = |+> = 1/√2(|0>+|1>)")
-print(hadamard_q0, "\n")
+print(matrix_to_qubit(hadamard_q0), "\n")
 
 hadamard_q1 = np.dot(hadamard, q1)
 print("Hadamard(|1>) = |-> = 1/√2(|0>-|1>)")
-print(hadamard_q1, "\n")
+print(matrix_to_qubit(hadamard_q1), "\n")
 
 
 # |001> = |0>⊗ |0>⊗ |1>
@@ -110,88 +111,94 @@ print("##### Олон qubit-үүдийн төлөв \n")
 # |00>
 q00 = np.kron(zero, zero)
 print("|00>")
-print(q00, "\n")
+print(matrix_to_qubit(q00), "\n")
 
 # |01>
 q01 = np.kron(zero, one)
 print("|01>")
-print(q01, "\n")
+print(matrix_to_qubit(q01), "\n")
 
 # |10>
 q10 = np.kron(one, zero)
 print("|10>")
-print(q10, "\n")
+print(matrix_to_qubit(q10), "\n")
 
 # |11>
 q11 = np.kron(one, one)
 print("|11>")
-print(q11, "\n")
+print(matrix_to_qubit(q11), "\n")
 
 # |-->
 q_minusminus = np.kron(minus, minus)
 print("|-->")
-print(q_minusminus, "\n")
+print(matrix_to_qubit(q_minusminus), "\n")
 
 # |-+>
 q_minusplus = np.kron(minus, plus)
 print("|-+>")
-print(q_minusplus, "\n")
+print(matrix_to_qubit(q_minusplus), "\n")
 
 # |+->
 q_plusminus = np.kron(plus, minus)
 print("|+->")
-print(q_plusminus, "\n")
+print(matrix_to_qubit(q_plusminus), "\n")
 
 # |++>
 q_plusplus = np.kron(plus, plus)
 print("|++>")
-print(q_plusplus, "\n")
+print(matrix_to_qubit(q_plusplus), "\n")
 
 # 1/√2(|00>+|11>)
 q_bellstate = normalize_state(q00+q11)
 print("1/√2(|00>+|11> Bell State")
-print(q_bellstate, "\n")
+print(matrix_to_qubit(q_bellstate), "\n")
+
+
+print("\n> N qubit систем үүсгэх :\n")
 
 # |000>
 q000 = n_kron(zero, zero, zero)
 print("|000>")
-print(q000, "\n")
+print(matrix_to_qubit(q000), "\n")
 
 # |001>
 q001 = n_kron(zero, zero, one)
 print("|001>")
-print(q001, "\n")
+print(matrix_to_qubit(q001), "\n")
 
 # |010>
 q010 = n_kron(zero, one, zero)
 print("|010>")
-print(q010, "\n")
+print(matrix_to_qubit(q010), "\n")
 
 # |111>
 q111 = n_kron(one, one, one)
 print("|111>")
-print(q111, "\n")
+print(matrix_to_qubit(q111), "\n")
+
+
+print("\n> N qubit систем дээр Hadamard gate хэрэглэх туршилт :\n")
 
 # H0(|101>) Эхний qubit дээр Hadamard хэрэглэх
 H0_on_3 = n_kron(hadamard, ID, ID)
 q101    = n_kron(one, zero, one)
 H0_101  = np.dot(H0_on_3, q101)
 print("H0(|101>)")
-print(H0_101, "\n")
+print(matrix_to_qubit(H0_101), "\n")
 
 # H1(|100>) Хоёр дахь qubit дээр Hadamard хэрэглэх
 H1_on_3 = n_kron(ID, hadamard, ID)
 q100    = n_kron(one, zero, zero)
 H1_100  = np.dot(H1_on_3, q100)
 print("H1(|100>)")
-print(H1_100, "\n")
+print(matrix_to_qubit(H1_100), "\n")
 
 # H2(|001>) Гурав дахь qubit дээр Hadamard хэрэглэх
 H2_on_3 = n_kron(ID, ID, hadamard)
 q001    = n_kron(one, one, zero)
 H2_001  = np.dot(H2_on_3, q001)
 print("H2(|001>)")
-print(H2_001, "\n")
+print(matrix_to_qubit(H2_001), "\n")
 
 
 
@@ -212,6 +219,8 @@ print(H2_001, "\n")
 # - https://en.wikipedia.org/wiki/Controlled_NOT_gate
 #
 #
+print("\n> CNOT gate-ийн туршилтууд : \n")
+
 P0        = np.dot(zero, zero.T)
 P1        = np.dot(one , one.T )
 CNOT_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_x)
@@ -219,22 +228,22 @@ CNOT_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_x)
 # CNOT(|00>) -> |00>
 CNOT_00 = np.dot(CNOT_on_2, q00)
 print("CNOT(|00>)")
-print(CNOT_00, "\n")
+print(matrix_to_qubit(CNOT_00), "\n")
 
 # CNOT(|01>) -> |01>
 CNOT_01 = np.dot(CNOT_on_2, q01)
 print("CNOT(|01>)")
-print(CNOT_01, "\n")
+print(matrix_to_qubit(CNOT_01), "\n")
 
 # CNOT(|10>) -> |11>
 CNOT_10 = np.dot(CNOT_on_2, q10)
 print("CNOT(|10>)")
-print(CNOT_10, "\n")
+print(matrix_to_qubit(CNOT_10), "\n")
 
 # CNOT(|11>) -> |10>
 CNOT_11 = np.dot(CNOT_on_2, q11)
 print("CNOT(|11>)")
-print(CNOT_11, "\n")
+print(matrix_to_qubit(CNOT_11), "\n")
 
 
 # Bell state буюу квант орооцолдоон(aka quantum entanglement)
@@ -263,7 +272,7 @@ q00        = np.kron(q0, q1)
 H0_00      = np.dot(H0_on_2, q00)
 CNOT_H0_00 = np.dot(CNOT_on_2, H0_00)
 print("BellState(|0>, |0>) = 1/√2(|00>+|11>")
-print(CNOT_H0_00, "\n")
+print(matrix_to_qubit(CNOT_H0_00), "\n")
 
 
 # TOFFOLI Gate буюу квант AND үйлдэл
@@ -275,7 +284,7 @@ print(CNOT_H0_00, "\n")
 # - https://en.wikipedia.org/wiki/Toffoli_gate
 #
 #
-print("\n TOFFOLI Gate буюу квант AND үйлдэл\n")
+print("\n> TOFFOLI Gate буюу квант AND үйлдэл\n")
 
 q000 = n_kron(zero, zero, zero) # |000> -> |000>
 q001 = n_kron(zero, zero,  one) # |001> -> |001>
@@ -298,17 +307,17 @@ toffoli = np.array(
         dtype=np.cfloat)
 
 print("TOFFOLI(|000>)")
-print(np.dot(toffoli, q000), "\n")
+print(matrix_to_qubit(np.dot(toffoli, q000)), "\n")
 print("TOFFOLI(|001>)")
-print(np.dot(toffoli, q001), "\n")
+print(matrix_to_qubit(np.dot(toffoli, q001)), "\n")
 print("TOFFOLI(|101>)")
-print(np.dot(toffoli, q101), "\n")
+print(matrix_to_qubit(np.dot(toffoli, q101)), "\n")
 print("TOFFOLI(|011>)")
-print(np.dot(toffoli, q011), "\n")
+print(matrix_to_qubit(np.dot(toffoli, q011)), "\n")
 print("TOFFOLI(|110>), AND үйлдэл хэрэгжинэ")
-print(np.dot(toffoli, q110), "\n")
+print(matrix_to_qubit(np.dot(toffoli, q110)), "\n")
 print("TOFFOLI(|111>), AND үйлдэл хэрэгжинэ")
-print(np.dot(toffoli, q111), "\n")
+print(matrix_to_qubit(np.dot(toffoli, q111)), "\n")
 
 
 # Qubit дээр хэмжилт хийх туршилт
@@ -316,10 +325,10 @@ print(np.dot(toffoli, q111), "\n")
 #   Qubit-ийн amplitude дагуу measure хийж үр дүнг гаргах
 #
 #
-print("Qubit дээр measure хийх туршилт :")
+print("\n> Qubit дээр measure хийх туршилт :\n")
 print("Эхлээд 1/√2(|00>+|11>) гэсэн 2 qubit бүхий bell state үүсгэе")
 q2_bellstate = normalize_state(q00+q11)
-print(q2_bellstate)
+print(matrix_to_qubit(q2_bellstate))
 
 qubit_lookup_table = {
         '1000': '00',
@@ -365,68 +374,68 @@ print(result, "\n")
 #
 #
 
-print("\nPhase flip болон Z эргүүлэлттэй холбоотой туршилт :\n")
+print("\n> Phase flip болон Z эргүүлэлттэй холбоотой туршилт :\n")
 
 print("> Phase flip хийлгүй hadamard-ийг дахин хэрэглэх HH|qubit>\n")
 
 qubit     = zero
 print("qubit-ийн эхний төлөв")
-print(qubit)
+print(matrix_to_qubit(qubit))
 
 new_state = np.dot(hadamard, qubit)
 print("hadamard нэг удаа хэрэглэсний дараа")
-print(new_state)
+print(matrix_to_qubit(new_state))
 
 new_state = np.dot(hadamard, new_state)
 print("hadamard-г дахин хэрэглэсний дараа")
-print(new_state, "\n")
+print(matrix_to_qubit(new_state), "\n")
 
 
 qubit     = one
 print("qubit-ийн эхний төлөв")
-print(qubit)
+print(matrix_to_qubit(qubit))
 
 new_state = np.dot(hadamard, qubit)
 print("hadamard нэг удаа хэрэглэсний дараа")
-print(new_state)
+print(matrix_to_qubit(new_state))
 
 new_state = np.dot(hadamard, new_state)
 print("hadamard-г дахин хэрэглэсний дараа")
-print(new_state, "\n")
+print(matrix_to_qubit(new_state), "\n")
 
 print("> Phase flip хийх буюу HZH|qubit>\n")
 
 qubit     = zero
 print("qubit-ийн эхний төлөв")
-print(qubit)
+print(matrix_to_qubit(qubit))
 
 new_state = np.dot(hadamard, qubit)
 print("hadamard нэг удаа хэрэглэсний дараа")
-print(new_state)
+print(matrix_to_qubit(new_state))
 
 new_state = np.dot(pauli_z, new_state)
 print("pauli-z хэрэглэсний дараа")
-print(new_state)
+print(matrix_to_qubit(new_state))
 
 new_state = np.dot(hadamard, new_state)
 print("hadamard дахин хэрэглэсний дараа")
-print(new_state, "\n")
+print(matrix_to_qubit(new_state), "\n")
 
 qubit     = one
 print("qubit-ийн эхний төлөв")
-print(qubit)
+print(matrix_to_qubit(qubit))
 
 new_state = np.dot(hadamard, qubit)
 print("hadamard нэг удаа хэрэглэсний дараа")
-print(new_state)
+print(matrix_to_qubit(new_state))
 
 new_state = np.dot(pauli_z, new_state)
 print("pauli-z хэрэглэсний дараа")
-print(new_state)
+print(matrix_to_qubit(new_state))
 
 new_state = np.dot(hadamard, new_state)
 print("hadamard дахин хэрэглэсний дараа")
-print(new_state, "\n")
+print(matrix_to_qubit(new_state), "\n")
 
 
 # Controlled Z gate
@@ -450,7 +459,7 @@ print(new_state, "\n")
 #
 #
 
-print("\nControlled-Z gate ийн туршилтууд :\n")
+print("\n> Controlled-Z gate ийн туршилтууд :\n")
 
 P0      = np.dot(zero, zero.T)
 P1      = np.dot(one , one.T )
@@ -458,23 +467,23 @@ CZ_on_2 = n_kron(P0, ID) + n_kron(P1, pauli_z)
 
 # CZ(|00>) ->
 CZ_00 = np.dot(CZ_on_2, q00)
-print("CZ(|00>)")
-print(CZ_00, "\n")
+print("CZ(|00>) =>")
+print(matrix_to_qubit(CZ_00), "\n")
 
 # CZ(|01>) ->
 CZ_01 = np.dot(CZ_on_2, q01)
-print("CZ(|01>)")
-print(CZ_01, "\n")
+print("CZ(|01>) =>")
+print(matrix_to_qubit(CZ_01), "\n")
 
 # CZ(|10>) ->
 CZ_10 = np.dot(CZ_on_2, q10)
-print("CZ(|10>)")
-print(CZ_10, "\n")
+print("CZ(|10>) =>")
+print(matrix_to_qubit(CZ_10), "\n")
 
 # CZ(|11>) ->
 CZ_11 = np.dot(CZ_on_2, q11)
-print("CZ(|11>)")
-print(CZ_11, "\n")
+print("CZ(|11>) =>")
+print(matrix_to_qubit(CZ_11), "\n")
 
 
 # SWAP gate
@@ -482,22 +491,22 @@ print(CZ_11, "\n")
 # Хоёр qubit төлвийг хооронд нь солино
 #
 #
-print("\nSWAP gate ийн туршилтууд :\n")
+print("\n> SWAP gate ийн туршилтууд :\n")
 
 # SWAP(|00>) -> |00>
 q00_swapped = np.dot(swap, q00)
-print("SWAP(|00>)\n", q00_swapped)
+print("SWAP(|00>) =>\n", matrix_to_qubit(q00_swapped))
 
 # SWAP(|01>) -> |10>
 q01_swapped = np.dot(swap, q01)
-print("SWAP(|01>)\n", q01_swapped)
+print("SWAP(|01>) =>\n", matrix_to_qubit(q01_swapped))
 
 # SWAP(|10>) -> |01>
 q10_swapped = np.dot(swap, q10)
-print("SWAP(|10>)\n", q10_swapped)
+print("SWAP(|10>) =>\n", matrix_to_qubit(q10_swapped))
 
 # SWAP(|11>) -> |11>
 q11_swapped = np.dot(swap, q11)
-print("SWAP(|11>)\n", q11_swapped)
+print("SWAP(|11>) =>\n", matrix_to_qubit(q11_swapped))
 
 
