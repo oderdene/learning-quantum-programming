@@ -1,4 +1,5 @@
 import random
+import sys
 import numpy as np
 import sympy as sp
 from sympy.physics.quantum.qubit import matrix_to_qubit
@@ -70,15 +71,15 @@ def measure(amplitudes, repetitions=10):
     qubit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
     return qubit.qubit_values
 
-def apply_pauli_x(psi, loc):
-    op_list      = [ID2]*8
+def apply_pauli_x(psi, loc, n=8):
+    op_list      = [ID2]*n
     op_list[loc] = pauli_x
     op_matrix    = n_kron_list(op_list)
     return np.dot(op_matrix, psi)
 
 # Олон qubit дээр Toffoli хэрэглэх талаар лавлагаа
 # - https://quantumcomputing.stackexchange.com/questions/13143/how-to-make-toffoli-gate-using-matrix-form-in-multi-qubits-system
-def apply_toffoli(psi, control0_loc, control1_loc, target_loc):
+def apply_toffoli(psi, control0_loc, control1_loc, target_loc, n=8):
     def T(n, a, b, x) :
         m = 2**(n-a)+2**(n-b)
         d = lambda i : 2**(n-x) if (2**(n-x)) & i == 0 else -(2**(n-x))
@@ -87,7 +88,7 @@ def apply_toffoli(psi, control0_loc, control1_loc, target_loc):
             for j in range(2**n) :
                 T[i][j] = 1 if (i & m == m and j == d(i) + i) or (i & m != m and j == i) else 0
         return T
-    op_matrix = T(8, control0_loc, control1_loc, target_loc)
+    op_matrix = T(n, control0_loc, control1_loc, target_loc)
     return np.dot(op_matrix, psi)
 
 # Олон qubit дээр gate хэрэглэх лавлагаа
@@ -108,12 +109,12 @@ def apply_toffoli(psi, control0_loc, control1_loc, target_loc):
 #     I⊗I⊗|1⟩⟨1|⊗I⊗I⊗I⊗I⊗I⊗X⊗I
 #
 #
-def apply_cnot(psi, control_loc, target_loc):
+def apply_cnot(psi, control_loc, target_loc, n=8):
     P0                     = np.dot(zero, zero.T)
     P1                     = np.dot(one , one.T )
-    op_list_0              = [ID2]*8
+    op_list_0              = [ID2]*n
     op_list_0[control_loc] = P0
-    op_list_1              = [ID2]*8
+    op_list_1              = [ID2]*n
     op_list_1[control_loc] = P1
     op_list_1[ target_loc] = pauli_x
     op_matrix = n_kron_list(op_list_0)+n_kron_list(op_list_1)
@@ -132,9 +133,9 @@ def apply_cnot(psi, control_loc, target_loc):
 #     - https://github.com/sharavsambuu/learning-quantum-programming/blob/master/images/fulladder.jpg
 #
 #
-def sum_qubits(a_bit, b_bit, carry_in):
+def sum_qubits(a_bit, b_bit, carry_in, n=8):
     # |ψ> = |00000000>
-    psi = n_kron_list([zero]*8)
+    psi = n_kron_list([zero]*n)
 
     if a_bit==1:
         psi = apply_pauli_x(psi, 0)
@@ -162,12 +163,42 @@ def sum_qubits(a_bit, b_bit, carry_in):
     qubit         = matrix_to_qubit(psi)
     print(qubit)
     qubit_values  = list(qubit.free_symbols)[0].qubit_values
-    _,_,_,_,_,sum_bit,_,carry_bit = qubit_values
+    _,_,_,_,_,sum_bit,_,carry_out = qubit_values
 
-    return sum_bit, carry_bit
+    return sum_bit, carry_out
 
 
 if __name__=="__main__":
+
+    # |11001>
+    q11001 = n_kron(one, one, zero, zero, one)
+
+    print("Quantum gates testing...\n")
+
+    q0 = q11001
+    print(matrix_to_qubit(q0), "\n")
+
+    print("CNOT_0_2(|11001>) => |11101>")
+    q0 = apply_cnot(q0, 0, 2, 5)
+    print(matrix_to_qubit(q0))
+
+    q0 = q11001
+    print("CNOT_2_4(|11001>) => |11001>")
+    q0 = apply_cnot(q0, 2, 4, 5)
+    print(matrix_to_qubit(q0))
+
+    q0 = q11001
+    print("CNOT_1_4(|11001>) => |11000>")
+    q0 = apply_cnot(q0, 1, 4, 5)
+    print(matrix_to_qubit(q0))
+
+    q0 = q11001
+    print("CNOT_4_1(|11001>) => |10001>")
+    q0 = apply_cnot(q0, 4, 1, 5)
+    print(matrix_to_qubit(q0))
+
+
+    sys.exit(0)
     print("Full adder бит нэмэх хүснэгт:")
 
     a_bit, b_bit, carry_in = 1, 1, 1
