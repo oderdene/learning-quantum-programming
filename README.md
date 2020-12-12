@@ -34,3 +34,4 @@ Just learning quantum stuffs
  - https://quantumcomputing.stackexchange.com/questions/5179/how-to-construct-matrix-of-regular-and-flipped-2-qubit-cnot
  - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
  - https://algassert.com/post/1717
+ - https://stuff.technology/grovers-search-algorithm-f6fc4dc1c932
