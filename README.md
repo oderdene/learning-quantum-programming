@@ -19,6 +19,9 @@ Just learning quantum stuffs
  - DONE : Implement quantum full adder with numpy
  - DONE : Implement quantum addition of two integers with numpy
  - DONE : Implement Grover's algorithm with numpy and cirq
+ - Implement Quantum Fourier Transform
+ - Implement fast parallel quantum adder
+ - Implement fast quantum multiplier
  - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit
  - Implement Shor's algorithm
