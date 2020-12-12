@@ -197,11 +197,9 @@ def sum_qubits(a_bit, b_bit, carry_in, n=8):
 
     psi = apply_pauli_x(psi, 7) # carry out
 
-    qubit = matrix_to_qubit(psi)
+    qubit_values = measure([a[0] for a in psi])
 
-    qubit_values  = list(qubit.free_symbols)[0].qubit_values
     _,_,_,_,_,sum_bit,_,carry_out = qubit_values
-
     return sum_bit, carry_out
 
 
