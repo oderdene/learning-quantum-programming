@@ -38,3 +38,4 @@ Just learning quantum stuffs
  - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
  - https://algassert.com/post/1717
  - https://stuff.technology/grovers-search-algorithm-f6fc4dc1c932
+ - https://quantum-computing.ibm.com/docs/iqx/guide/grovers-algorithm
