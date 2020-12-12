@@ -123,19 +123,16 @@ def apply_cz(psi, control_loc, target_loc, n):
 
 
 def oracle_00():
-    print("> |00> төлөв хайхад зориулагдсан oracle\n")
-
     # |ψ> = |00>
     psi = n_kron_list([zero]*2)
 
+    print("\n\n> |00> төлөв хайхад зориулагдсан oracle\n")
+
     psi = apply_hadamard(psi, 0, n=2) # H(q0)
     psi = apply_hadamard(psi, 1, n=2) # H(q1)
-
     psi = apply_pauli_x(psi, 0, n=2)  # X(q0)
     psi = apply_pauli_x(psi, 1, n=2)  # X(q1)
-
     psi = apply_cz(psi, 0, 1, n=2)    # CZ(q0, q1)
-
     psi = apply_pauli_x(psi, 0, n=2)  # H(q0)
     psi = apply_pauli_x(psi, 1, n=2)  # H(q1)
 
@@ -147,19 +144,16 @@ def oracle_00():
     print("measure | q0 q1 > = |{}{}>".format(q0, q1))
 
 
-    # Amplitude amplification
+    print("\n> |00> Amplitude amplification\n")
+
     psi = apply_hadamard(psi, 0, n=2) # H(q0)
     psi = apply_hadamard(psi, 1, n=2) # H(q1)
-
     psi = apply_pauli_z(psi, 0, n=2)  # Z(q0)
     psi = apply_pauli_z(psi, 1, n=2)  # Z(q1)
-
     psi = apply_cz(psi, 0, 1, n=2)    # CZ(q0, q1)
-
     psi = apply_hadamard(psi, 0, n=2) # H(q0)
     psi = apply_hadamard(psi, 1, n=2) # H(q1)
 
-    print("\n> Amplitude amplification хийсний дараа")
     print("|ψ> = 1*|00⟩+ 0*|01⟩ + 0*|10⟩ + 0*|11⟩")
     print(psi)
     print(matrix_to_qubit(psi))
@@ -167,6 +161,39 @@ def oracle_00():
     q0, q1       = qubit_values
     print("measure | q0 q1 > = |{}{}>\n".format(q0, q1))
 
+    pass
+
+def oracle_11():
+    # |ψ> = |00>
+    psi = n_kron_list([zero]*2)
+
+    print("\n\n> |11> төлөв хайхад зориулагдсан oracle\n")
+
+    psi = apply_hadamard(psi, 0, n=2) # H(q0)
+    psi = apply_hadamard(psi, 1, n=2) # H(q1)
+    psi = apply_cz(psi, 0, 1, n=2)    # CZ(q0, q1)
+
+    print(psi)
+    print(matrix_to_qubit(psi))
+    qubit_values = measure([a[0] for a in psi])
+    q0, q1       = qubit_values
+    print("measure | q0 q1 > = |{}{}>".format(q0, q1))
+
+
+    print("\n> |11> Amplitude amplification\n")
+    psi = apply_hadamard(psi, 0, n=2) # H(q0)
+    psi = apply_hadamard(psi, 1, n=2) # H(q1)
+    psi = apply_pauli_z(psi, 0, n=2)  # Z(q0)
+    psi = apply_pauli_z(psi, 1, n=2)  # Z(q1)
+    psi = apply_cz(psi, 0, 1, n=2)    # CZ(q0, q1)
+    psi = apply_hadamard(psi, 0, n=2) # H(q0)
+    psi = apply_hadamard(psi, 1, n=2) # H(q1)
+
+    print(psi)
+    print(matrix_to_qubit(psi))
+    qubit_values = measure([a[0] for a in psi])
+    q0, q1       = qubit_values
+    print("measure | q0 q1 > = |{}{}>\n".format(q0, q1))
 
     pass
 
@@ -179,6 +206,7 @@ def oracle_00():
 
 def grover():
     oracle_00()
+    oracle_11()
     pass
 
 
