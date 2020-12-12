@@ -136,13 +136,17 @@ def oracle_00():
 
     psi = apply_cz(psi, 0, 1, n=2)    # CZ(q0, q1)
 
-    psi = apply_hadamard(psi, 0, n=2) # H(q0)
-    psi = apply_hadamard(psi, 1, n=2) # H(q1)
+    psi = apply_pauli_x(psi, 0, n=2) # H(q0)
+    psi = apply_pauli_x(psi, 1, n=2) # H(q1)
 
+
+    print("|ψ> = —1/2*|00⟩ + 1/2*|01⟩ + 1/2*|10⟩ + 1/2*|11⟩")
     print(psi)
+    print(matrix_to_qubit(psi))
     qubit_values = measure([a[0] for a in psi])
     q0, q1       = qubit_values
     print("measure | q0 q1 > = |{}{}>".format(q0, q1))
+
     pass
 
 # Grover-ийн алгоритм
@@ -159,6 +163,6 @@ def grover():
 
 
 if __name__=="__main__":
-    print("Grover-ийн квант хайлт")
+    print("Grover-ийн хайлтын алгоритм")
     grover()
     pass
