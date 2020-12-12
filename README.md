@@ -9,6 +9,8 @@ Just learning quantum stuffs
  - Классик бит нэмэх үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1e0YLdV0JiLkbA5GcrjoHbkG9lp8aevna?usp=sharing)
  - Хоёр бүхэл тоог нэмэх үйлдлийг квант механикийн дагуу numpy дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1PMhZ3YeQZPIv8PV2aW04BOz62k9uavrR?usp=sharing)
  - Хоёр бүхэл тоо нэмэх үйлдлийг cirq дээр хэрэгжүүлэх [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1y4K3-VCsHP9S2ipAXOC2X3wPgVR39WDx?usp=sharing)
+ - 2 qubit Grover-ийн хайлт numpy дээр [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kURSFMjtsjqdSFxZ6PGI16fNfqCa8q6U?usp=sharing)
+
 
 # Tasks
  - DONE : Implement quantum AND or Toffoli gate with numpy
@@ -16,7 +18,8 @@ Just learning quantum stuffs
  - DONE : Implement quantum XOR with numpy
  - DONE : Implement quantum full adder with numpy
  - DONE : Implement quantum addition of two integers with numpy
- - ONGOING : Implement Grover's algorithm with numpy
+ - DONE : Implement Grover's algorithm with numpy
+ - ONGOING : Implement Grover's algorithm with cirq
  - Implement Deutsch–Jozsa algorithm
  - Implement multiplication using quantum circuit
  - Implement Shor's algorithm
