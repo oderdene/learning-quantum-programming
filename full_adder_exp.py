@@ -10,7 +10,8 @@ from sympy.physics.quantum.qubit import matrix_to_qubit
 # - https://quantumcomputing.stackexchange.com/questions/10098/how-to-represent-an-n-qubit-circuit-in-matrix-form/10106
 # - https://quantumcomputing.stackexchange.com/questions/5179/how-to-construct-matrix-of-regular-and-flipped-2-qubit-cnot
 # - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
-#
+# Implementation of SWAP with 3 CNOT gates
+# - https://algassert.com/post/1717
 #
 
 
@@ -41,7 +42,10 @@ minus = normalize_state(zero-one)
 plus  = normalize_state(zero+one)
 
 # Quantum logic gates
+#
 # - https://en.wikipedia.org/wiki/Quantum_logic_gate
+#
+#
 pauli_x = np.array(
         [[0.+0.j, 1.+0.j],
          [1.+0.j, 0.+0.j]])
@@ -66,8 +70,20 @@ toffoli = np.array(
          [0, 0, 0, 0, 0, 0, 0, 1],
          [0, 0, 0, 0, 0, 0, 1, 0]],
         dtype=np.cfloat)
+swap = np.array(
+        [[1, 0, 0, 0],
+         [0, 0, 1, 0],
+         [0, 1, 0, 0],
+         [0, 0, 0, 1]],
+        dtype=np.cfloat)
 
 
+# Qubit measurement
+#
+#   Qubit-ийн amplitude-ийн дагуу классик бит гаргаж авах
+#   тухайн битрүү collapse хийгдэж ирэх магадлал amplitude-аар илэрхийлэгдэнэ
+#
+#
 def measure(amplitudes, repetitions=10):
     measurements = []
     for _ in range(repetitions):
@@ -80,6 +96,12 @@ def measure(amplitudes, repetitions=10):
     qubit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
     return qubit.qubit_values
 
+# N qubit системд хэрэглэх NOT
+#
+#   apply_pauli_x(|10001>, 2, n=5) => |10101>
+#   apply_pauli_x(|10101>, 4, n=5) => |10100>
+#
+#
 def apply_pauli_x(psi, loc, n=8):
     op_list      = [ID2]*n
     op_list[loc] = pauli_x
@@ -87,6 +109,7 @@ def apply_pauli_x(psi, loc, n=8):
     return np.dot(op_matrix, psi)
 
 # Хоёр qubit систем дээр
+#
 #   P0 = |0><0|, P1 = |1><1|
 #   CNOT = P0⊗ ID + P1⊗ X
 #
@@ -111,6 +134,17 @@ def apply_cnot(psi, control_loc, target_loc, n=8):
     op_matrix = n_kron_list(op_list_0)+n_kron_list(op_list_1)
     return np.dot(op_matrix, psi)
 
+# N qubit системд хэрэглэх SWAP
+#
+#   apply_swap(|10110>, 1, 3, n=5) => |11100>
+#   apply_swap(|11010>, 0, 4, n=5) => |01011>
+#
+#
+def apply_swap(psi, a_loc, b_loc, n=8):
+    psi = apply_cnot(psi, a_loc, b_loc, n=n)
+    psi = apply_cnot(psi, b_loc, a_loc, n=n)
+    psi = apply_cnot(psi, a_loc, b_loc, n=n)
+    return psi
 
 # Full Adder
 #
@@ -196,22 +230,22 @@ if __name__=="__main__":
     q0 = apply_pauli_x(q0, 4, 5)
     print(matrix_to_qubit(q0))
 
-    print("\n\nToffoli testing...\n")
-    print("Toffoli_0_1_2(|11001>) => |11101>")
+    print("\n\nSWAP testing...\n")
+    print("SWAP_1_3(|11001>) => |10011>")
     q0 = q11001
-    q0 = apply_toffoli(q0, 0, 1, 2, 5)
+    q0 = apply_swap(q0, 1, 3, n=5)
     print(matrix_to_qubit(q0))
-    print("Toffoli_1_4_2(|11001>) => |11101>")
+    print("SWAP_0_4(|11001>) => |11001>")
     q0 = q11001
-    q0 = apply_toffoli(q0, 1, 4, 2, 5)
+    q0 = apply_swap(q0, 0, 4, n=5)
     print(matrix_to_qubit(q0))
-    print("Toffoli_0_2_3(|11001>) => |11001>")
+    print("SWAP_0_3(|11001>) => |01011>")
     q0 = q11001
-    q0 = apply_toffoli(q0, 0, 2, 3, 5)
+    q0 = apply_swap(q0, 0, 3, n=5)
     print(matrix_to_qubit(q0))
-
 
     sys.exit(0)
+
     print("Full adder бит нэмэх хүснэгт:")
 
     a_bit, b_bit, carry_in = 1, 1, 1
