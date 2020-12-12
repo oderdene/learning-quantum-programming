@@ -13,6 +13,12 @@ def n_kron(*args):
         result = np.kron(result, op)
     return result
 
+def n_kron_list(args):
+    result = np.array([[1.+0.j]])
+    for op in args:
+        result = np.kron(result, op)
+    return result
+
 # |0>
 zero = np.array([[1.+0.j],
                  [0.+0.j]], dtype=np.cfloat)
@@ -24,8 +30,6 @@ minus = normalize_state(zero-one)
 # |+> = 1/√2(|0>+|1>)
 plus  = normalize_state(zero+one)
 
-# Quantum logic gates
-# - https://en.wikipedia.org/wiki/Quantum_logic_gate
 pauli_x = np.array(
         [[0.+0.j, 1.+0.j],
          [1.+0.j, 0.+0.j]])
@@ -50,6 +54,12 @@ toffoli = np.array(
          [0, 0, 0, 0, 0, 0, 0, 1],
          [0, 0, 0, 0, 0, 0, 1, 0]],
         dtype=np.cfloat)
+swap = np.array(
+        [[1, 0, 0, 0],
+         [0, 0, 1, 0],
+         [0, 1, 0, 0],
+         [0, 0, 0, 1]],
+        dtype=np.cfloat)
 
 
 def measure(amplitudes, repetitions=10):
@@ -64,52 +74,76 @@ def measure(amplitudes, repetitions=10):
     qubit  = list(matrix_to_qubit(np.array(sample)).free_symbols)[0]
     return qubit.qubit_values
 
-def assign_bit(qubit, bit):
-    if bit==1:
-        return np.dot(pauli_x, qubit)
-    return qubit
 
-def apply_toffoli(q0, q1, q_target):
-    q_combined = n_kron(q0, q1, q_target)
-    new_state  = np.dot(toffoli, q_combined)
-    qubit_values = list(matrix_to_qubit(new_state).free_symbols)[0].qubit_values
-    _, _, updated_target = qubit_values
-    q_target = (lambda x: zero if x==0 else one)(updated_target)
-    return q_target
+def apply_pauli_x(psi, loc, n):
+    op_list      = [ID2]*n
+    op_list[loc] = pauli_x
+    op_matrix    = n_kron_list(op_list)
+    return np.dot(op_matrix, psi)
 
-def apply_cnot(q0, q_target):
-    P0         = np.dot(zero, zero.T)
-    P1         = np.dot(one , one.T )
-    CNOT_on_2  = n_kron(P0, ID2) + n_kron(P1, pauli_x)
-    q_combined    = n_kron(q0, q_target)
-    CNOT_0_target = np.dot(CNOT_on_2, q_combined)
-    qubit_values  = list(matrix_to_qubit(CNOT_0_target).free_symbols)[0].qubit_values
-    _, updated_target = qubit_values
-    q_target = (lambda x: zero if x==0 else one)(updated_target)
-    return q_target
+def apply_pauli_z(psi, loc, n):
+    op_list      = [ID2]*n
+    op_list[loc] = pauli_z
+    op_matrix    = n_kron_list(op_list)
+    return np.dot(op_matrix, psi)
 
-def apply_cz(q0, q_target):
-    P0         = np.dot(zero, zero.T)
-    P1         = np.dot(one , one.T )
-    CNOT_on_2  = n_kron(P0, ID2) + n_kron(P1, pauli_z)
-    q_combined    = n_kron(q0, q_target)
-    CNOT_0_target = np.dot(CNOT_on_2, q_combined)
-    print("q_combined:")
-    print(q_combined)
-    print("CNOT_on_2:")
-    print(CNOT_on_2)
-    print("CNOT_0_target:")
-    print(CNOT_0_target)
-    #print(matrix_to_qubit(CNOT_0_target))
-    print("matrix to qubit free symbols:")
-    print(matrix_to_qubit(CNOT_0_target).free_symbols)
-    print("######")
-    qubit_values  = list(matrix_to_qubit(CNOT_0_target).free_symbols)[0].qubit_values
-    print(qubit_values)
-    _, updated_target = qubit_values
-    q_target = (lambda x: zero if x==0 else one)(updated_target)
-    return q_target
+def apply_hadamard(psi, loc, n):
+    op_list      = [ID2]*n
+    op_list[loc] = hadamard
+    op_matrix    = n_kron_list(op_list)
+    return np.dot(op_matrix, psi)
 
+def apply_cnot(psi, control_loc, target_loc, n):
+    P0                     = np.dot(zero, zero.T)
+    P1                     = np.dot(one , one.T )
+    op_list_0              = [ID2]*n
+    op_list_0[control_loc] = P0
+    op_list_1              = [ID2]*n
+    op_list_1[control_loc] = P1
+    op_list_1[ target_loc] = pauli_x
+    op_matrix = n_kron_list(op_list_0)+n_kron_list(op_list_1)
+    return np.dot(op_matrix, psi)
+
+def apply_swap(psi, a_loc, b_loc, n):
+    psi = apply_cnot(psi, a_loc, b_loc, n=n)
+    psi = apply_cnot(psi, b_loc, a_loc, n=n)
+    psi = apply_cnot(psi, a_loc, b_loc, n=n)
+    return psi
+
+def apply_cz(psi, control_loc, target_loc, n):
+    P0                     = np.dot(zero, zero.T)
+    P1                     = np.dot(one , one.T )
+    op_list_0              = [ID2]*n
+    op_list_0[control_loc] = P0
+    op_list_1              = [ID2]*n
+    op_list_1[control_loc] = P1
+    op_list_1[ target_loc] = pauli_z
+    op_matrix = n_kron_list(op_list_0)+n_kron_list(op_list_1)
+    return np.dot(op_matrix, psi)
+
+
+def oracle_00():
+    print("|00> төлөв хайхад зориулагдсан oracle")
+
+    # |ψ> = |00>
+    psi = n_kron_list([zero]*2)
+
+    psi = apply_hadamard(psi, 0, n=2) # H(q0)
+    psi = apply_hadamard(psi, 1, n=2) # H(q1)
+
+    psi = apply_pauli_x(psi, 0, n=2)  # X(q0)
+    psi = apply_pauli_x(psi, 1, n=2)  # X(q1)
+
+    psi = apply_cz(psi, 0, 1, n=2)    # CZ(q0, q1)
+
+    psi = apply_hadamard(psi, 0, n=2) # H(q0)
+    psi = apply_hadamard(psi, 1, n=2) # H(q1)
+
+    print(psi)
+    qubit_values = measure([a[0] for a in psi])
+    q0, q1       = qubit_values
+    print("measure | q0 q1 > = |{}{}>".format(q0, q1))
+    pass
 
 # Grover-ийн алгоритм
 #
@@ -119,29 +153,12 @@ def apply_cz(q0, q_target):
 #
 
 def grover():
-    print("|00> төлөв хайхад зориулагдсан oracle")
-    q0, q1 = zero, zero
-
-    q0 = np.dot(hadamard, q0)
-    q1 = np.dot(hadamard, q1)
-
-    q0 = np.dot(pauli_x, q0)
-    q1 = np.dot(pauli_x, q1)
-
-    q1 = apply_cz(q0, q1)
-
-    q0 = np.dot(hadamard, q0)
-    q1 = np.dot(hadamard, q1)
-
-    q0_measure, = measure([a[0] for a in q0])
-    q1_measure, = measure([a[0] for a in q1])
-    print("measure |q0q1> = |{}{}>".format(q0_measure, q1_measure))
+    oracle_00()
     pass
 
 
 
-
 if __name__=="__main__":
-    print("Grover's algorithm")
+    print("Grover-ийн квант хайлт")
     grover()
     pass
