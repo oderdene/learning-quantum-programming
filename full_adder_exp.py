@@ -4,6 +4,15 @@ import numpy as np
 import sympy as sp
 from sympy.physics.quantum.qubit import matrix_to_qubit
 
+# N qubit системд quantum gate хэрэглэх талаархи лавлагаанууд
+#
+# - https://quantumcomputing.stackexchange.com/questions/13143/how-to-make-toffoli-gate-using-matrix-form-in-multi-qubits-system
+# - https://quantumcomputing.stackexchange.com/questions/10098/how-to-represent-an-n-qubit-circuit-in-matrix-form/10106
+# - https://quantumcomputing.stackexchange.com/questions/5179/how-to-construct-matrix-of-regular-and-flipped-2-qubit-cnot
+# - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
+#
+#
+
 
 def normalize_state(state):
     return state/np.linalg.norm(state)
@@ -77,24 +86,6 @@ def apply_pauli_x(psi, loc, n=8):
     op_matrix    = n_kron_list(op_list)
     return np.dot(op_matrix, psi)
 
-# Олон qubit дээр Toffoli хэрэглэх талаар лавлагаа
-# - https://quantumcomputing.stackexchange.com/questions/13143/how-to-make-toffoli-gate-using-matrix-form-in-multi-qubits-system
-def apply_toffoli(psi, control0_loc, control1_loc, target_loc, n=8):
-    def T(n, a, b, x) :
-        m = 2**(n-a)+2**(n-b)
-        d = lambda i : 2**(n-x) if (2**(n-x)) & i == 0 else -(2**(n-x))
-        T = np.array([([0] * 2**n)] * 2**n)
-        for i in range(2**n) :
-            for j in range(2**n) :
-                T[i][j] = 1 if (i & m == m and j == d(i) + i) or (i & m != m and j == i) else 0
-        return T
-    op_matrix = T(n, control0_loc, control1_loc, target_loc)
-    return np.dot(op_matrix, psi)
-
-# Олон qubit дээр gate хэрэглэх лавлагаа
-# - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
-# - https://quantumcomputing.stackexchange.com/questions/5179/how-to-construct-matrix-of-regular-and-flipped-2-qubit-cnot
-#
 # Хоёр qubit систем дээр
 #   P0 = |0><0|, P1 = |1><1|
 #   CNOT = P0⊗ ID + P1⊗ X
@@ -174,41 +165,49 @@ if __name__=="__main__":
     q11001 = n_kron(one, one, zero, zero, one)
 
     print("\n\nCNOT testing...\n")
-    q0 = q11001
     print("CNOT_0_2(|11001>) => |11101>")
+    q0 = q11001
     q0 = apply_cnot(q0, 0, 2, 5)
     print(matrix_to_qubit(q0))
-    q0 = q11001
     print("CNOT_2_4(|11001>) => |11001>")
+    q0 = q11001
     q0 = apply_cnot(q0, 2, 4, 5)
     print(matrix_to_qubit(q0))
-    q0 = q11001
     print("CNOT_1_4(|11001>) => |11000>")
+    q0 = q11001
     q0 = apply_cnot(q0, 1, 4, 5)
     print(matrix_to_qubit(q0))
-    q0 = q11001
     print("CNOT_4_1(|11001>) => |10001>")
+    q0 = q11001
     q0 = apply_cnot(q0, 4, 1, 5)
     print(matrix_to_qubit(q0))
 
     print("\n\nPauli-X testing...\n")
-    q0 = q11001
     print("X_0(|11001>) => |01001>")
+    q0 = q11001
     q0 = apply_pauli_x(q0, 0, 5)
     print(matrix_to_qubit(q0))
-    q0 = q11001
     print("X_3(|11001>) => |11011>")
+    q0 = q11001
     q0 = apply_pauli_x(q0, 3, 5)
     print(matrix_to_qubit(q0))
-    q0 = q11001
     print("X_4(|11001>) => |11000>")
+    q0 = q11001
     q0 = apply_pauli_x(q0, 4, 5)
     print(matrix_to_qubit(q0))
 
     print("\n\nToffoli testing...\n")
-    q0 = q11001
     print("Toffoli_0_1_2(|11001>) => |11101>")
+    q0 = q11001
     q0 = apply_toffoli(q0, 0, 1, 2, 5)
+    print(matrix_to_qubit(q0))
+    print("Toffoli_1_4_2(|11001>) => |11101>")
+    q0 = q11001
+    q0 = apply_toffoli(q0, 1, 4, 2, 5)
+    print(matrix_to_qubit(q0))
+    print("Toffoli_0_2_3(|11001>) => |11001>")
+    q0 = q11001
+    q0 = apply_toffoli(q0, 0, 2, 3, 5)
     print(matrix_to_qubit(q0))
 
 
