@@ -169,24 +169,36 @@ def sum_qubits(a_bit, b_bit, carry_in, n=8):
     if carry_in==1:
         psi = apply_pauli_x(psi, 2)
 
-    # AND1
-    psi = apply_toffoli(psi, 0, 1, 3)
+    # AND1 => toffoli(0, 1, 3)
+    psi = apply_swap(psi, 2, 3)
+    psi = np.dot(n_kron_list([toffoli, ID2, ID2, ID2, ID2, ID2]), psi)
+    psi = apply_swap(psi, 2, 3)
     # XOR1
     psi = apply_cnot(psi, 0, 4)
     psi = apply_cnot(psi, 1, 4)
     # XOR2
     psi = apply_cnot(psi, 2, 5)
     psi = apply_cnot(psi, 4, 5) # sum
-    # AND2
-    psi = apply_toffoli(psi, 2, 4, 6)
+    # AND2 => toffoli(2, 4, 6)
+    psi = apply_swap(psi, 2, 3)
+    psi = apply_swap(psi, 5, 6)
+    psi = np.dot(n_kron_list([ID2, ID2, ID2, toffoli, ID2, ID2]), psi)
+    psi = apply_swap(psi, 5, 6)
+    psi = apply_swap(psi, 2, 3)
     # OR
     psi = apply_pauli_x(psi, 3)
     psi = apply_pauli_x(psi, 6)
-    psi = apply_toffoli(psi, 3, 6, 7)
+    # toffoli(3, 6, 7)
+    psi = apply_swap(psi, 3, 4)
+    psi = apply_swap(psi, 4, 5)
+    psi = np.dot(n_kron_list([ID2, ID2, ID2, ID2, ID2, toffoli]), psi)
+    psi = apply_swap(psi, 4, 5)
+    pis = apply_swap(psi, 3, 4)
+
     psi = apply_pauli_x(psi, 7) # carry out
 
-    qubit         = matrix_to_qubit(psi)
-    print(qubit)
+    qubit = matrix_to_qubit(psi)
+
     qubit_values  = list(qubit.free_symbols)[0].qubit_values
     _,_,_,_,_,sum_bit,_,carry_out = qubit_values
 
@@ -242,11 +254,10 @@ if __name__=="__main__":
     print("SWAP_0_3(|11001>) => |01011>")
     q0 = q11001
     q0 = apply_swap(q0, 0, 3, n=5)
-    print(matrix_to_qubit(q0))
+    print(matrix_to_qubit(q0), "\n\n")
 
-    sys.exit(0)
 
-    print("Full adder бит нэмэх хүснэгт:")
+    print("\nFull adder бит нэмэх хүснэгт:\n")
 
     a_bit, b_bit, carry_in = 1, 1, 1
     summed, carry_out = sum_qubits(a_bit=a_bit, b_bit=b_bit, carry_in=carry_in)
