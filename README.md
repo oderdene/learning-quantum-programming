@@ -29,3 +29,8 @@ Just learning quantum stuffs
  - https://cirq.readthedocs.io/en/stable/
  - https://quantumcomputinguk.org/tutorials/performing-addition-on-ibms-quantum-computers
  - https://lahirumadushankablog.wordpress.com/2020/02/04/quantum-half-adder-and-full-adder/
+ - https://quantumcomputing.stackexchange.com/questions/13143/how-to-make-toffoli-gate-using-matrix-form-in-multi-qubits-system
+ - https://quantumcomputing.stackexchange.com/questions/10098/how-to-represent-an-n-qubit-circuit-in-matrix-form/10106
+ - https://quantumcomputing.stackexchange.com/questions/5179/how-to-construct-matrix-of-regular-and-flipped-2-qubit-cnot
+ - https://cs.stackexchange.com/questions/48834/applying-a-multi-qubit-quantum-gate-to-specific-qubits
+ - https://algassert.com/post/1717
