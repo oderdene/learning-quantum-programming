@@ -1,5 +1,6 @@
 import random
 import sys
+from collections import Counter
 import numpy as np
 import sympy as sp
 from sympy.physics.quantum.qubit import matrix_to_qubit
@@ -167,7 +168,6 @@ def fourier_transform():
     psi = n_kron_list([zero]*4)
 
     print("\nQuantum fourier transform\n")
-    print("\n", matrix_to_qubit(psi), "\n")
 
     psi = apply_hadamard(psi, 0, n=4)
 
@@ -186,10 +186,21 @@ def fourier_transform():
 
     psi = apply_hadamard(psi, 0, n=4)
 
-    print("\nqFT(|0000>)\n")
-    print(matrix_to_qubit(psi))
-    qubit_values = measure([a[0] for a in psi])
-    print(qubit_values)
+
+    measurements = []
+    repetitions  = 10000
+    for idx in range(0, repetitions):
+        psi_values = measure([a[0] for a in psi], repetitions=1)
+        psi_str    = "".join([str(bit) for bit in psi_values])
+        measurements.append(psi_str)
+        print(psi_str, "=>", int(psi_str, 2))
+        pass
+
+    print("\n", matrix_to_qubit(psi), "\n")
+
+    histogram = Counter(measurements)
+    print("\n", list(histogram.keys()), "\n")
+    print("\n", histogram, "\n")
 
     pass
 
