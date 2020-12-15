@@ -41,3 +41,4 @@ Just learning quantum stuffs
  - https://algassert.com/post/1717
  - https://stuff.technology/grovers-search-algorithm-f6fc4dc1c932
  - https://quantum-computing.ibm.com/docs/iqx/guide/grovers-algorithm
+ - https://qiskit.org/textbook/ch-algorithms/quantum-fourier-transform.html
